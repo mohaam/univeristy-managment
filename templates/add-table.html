@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Hello, world!</title>
+      <style>
+          td,th{
+              border: 3px solid black;
+              padding: 10px;
+          }
+      </style>
+  </head>
+  <body>
+      <table id="t" style="width:50%; border: 5px solid black; height: auto; ">
+          <tr>
+            <th>day</th>
+            <td>course</td>
+            <td>form</td>
+            <td>to</td>
+          </tr>
+          <tr id="0">
+            <th rowspan="1" id="st" >saturday <button class="mo">add</button></th>
+            
+          </tr>
+
+          <tr>
+            <th rowspan="1" id="1">sunday <button>add</button></th>
+          </tr>
+          
+          <tr>
+            <th rowspan="1" id="2">monday <button>add</button></th>
+            
+          </tr>
+          
+          <tr>
+            <th rowspan="1" id="3">tuesday <button>add</button></th>
+            
+          </tr>
+          
+          <tr>
+            <th rowspan="1" id="4">thursday <button>add</button></th>
+          </tr>
+          
+          <tr>
+            <th rowspan="1" id="5">wensday <button>add</button></th>
+          </tr>
+      </table>
+      <script>
+          g=document.querySelector(".mo");
+              g.onclick = function(){
+                        	function insertAfter(el, referenceNode) {
+                referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+                        }
+              x= document.createElement('tr');
+              x.innerHTML='<td> <input type="text"> </td> <td> <input type="text"> </td> <td> <input type="text"> </td>';
+              row = document.getElementById('0');
+              day = document.getElementById('st')
+              day.rowSpan="4"
+              insertAfter(x,row)
+              
+          }
+
+      </script>
+  </body>
+</html>
