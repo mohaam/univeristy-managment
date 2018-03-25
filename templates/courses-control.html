@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="{{url_for('static',filename='js/courses-control.js')}}"></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {%if result != []%}
+                    <div>
+                        <table class=" table result ">
+                            <thead class="thead-dark">
+                                <tr class="table-success">
+                                    <th scope="col">name</th>
+                                    <th scope="col">code</th>
+                                    <th scope="col">fullmark</th>
+                                    <th scope="col">passmark</th>
+                                    <th scope="col">hours</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            {% for courses in result%}
+                                <tbody>
+                                    <tr class="table-success">
+                                        <td data-id="{{courses.code}}" data-info="name">{{courses.name}} </td>
+                                        <td data-id="{{courses.code}}" data-info="code">{{courses.code}} </td>
+                                        <td data-id="{{courses.code}}" data-info="full_mark">{{courses.full_mark}}</td>
+                                        <td data-id="{{courses.code}}" data-info="pass_mark">{{courses.pass_mark}}</td>
+                                        <td data-id="{{courses.code}}" data-info="hours">{{courses.hours}}</td>
+                
+                                        <th ><button type="button" class="btn btn-danger" data-id="{{courses.code}}" id="del">Delete</button>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            {%endfor%}
+                        </table>
+                    </div>
+                    {%endif%}
+
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                            <h2 id="s">Add Course:</h2>
+                            <div id="input-control" style="height:50%;overflow:scroll;">
+                                <form action="" method="post">
+                                    <div class="form-group">
+                                        <label for="name">name:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="name" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="code">code:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="code" aria-describedby="emailHelp" placeholder="code" name="code">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="full">fullmark:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="full" aria-describedby="emailHelp" placeholder="fullmark" name="full">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pass">passmark:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="pass" placeholder="passmark" name="pass">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hours">hours:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="hours" placeholder="hours" name="hours">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="add">SAVE</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+        </div>
+    </body>
+</html>
