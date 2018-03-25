@@ -1,43 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-4">
-
-            </div>
-
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <h2>edit information:</h2>
-                <form action="{{url_for('studentcontrol',id = id)}}" method="post">
-                    <div class="form-group">
-                        <label for="de">deparment:</label>
-                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="deparment" name="deparment">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="{{url_for('static',filename='js/student-control.js')}}"></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {%if result != []%}
+                    <div>
+                        <table class=" table result ">
+                            <thead class="thead-dark">
+                                <tr class="table-success">
+                                    <th scope="col">name</th>
+                                    <th scope="col">age</th>
+                                    <th scope="col">address</th>
+                                    <th scope="col">gender</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">phonenumber</th>
+                                    <th scope="col">gpa</th>
+                                    <th scope="col">level</th>
+                                    <th scope="col">program</th>
+                                    <th scope="col">deparment</th>
+                                    <th scope="col">secretcode</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            {% for student in result%}
+                                <tbody>
+                                    <tr class="table-success">
+                                        <td data-id="{{student.ID}}" data-info="name">{{student.name}} </td>
+                                        <td data-id="{{student.ID}}" data-info="age">{{student.age}} </td>
+                                        <td data-id="{{student.ID}}" data-info="address">{{student.address}}</td>
+                                        <td data-id="{{student.ID}}" data-info="sex">{{student.sex}}</td>
+                                        <td data-id="{{student.ID}}" data-info="email">{{student.email}}</td>
+                                        <td data-id="{{student.ID}}" data-info="phonenumber">{{student.phonenumber}}</td>
+                                        <td data-id="{{student.ID}}" data-info="gpa">{{student.gpa}}</td>
+                                        <td data-id="{{student.ID}}" data-info="program_level">{{student.program_level}} </td>
+                                        <td data-id="{{student.ID}}" data-info="program_name">{{student.program_name}}</td>
+                                        <td data-id="{{student.ID}}" data-info="department_name" >{{student.department_name}}</td>
+                                        <td data-id="{{student.ID}}" data-info="secretcode">{{student.secretcode}}</td>
+                                        <th ><button type="button" class="btn btn-danger" data-id="{{student.ID}}" id="del">Delete</button>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            {%endfor%}
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label for="pr">program:</label>
-                        <input type="text" class="form-control" id="pr" placeholder="program" name="program">
-                    </div>
-                    <div class="form-group">
-                        <label for="le">level:</label>
-                        <input type="text" class="form-control" id="le" placeholder="level" name="level">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Get</button>
-                </form>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
+                    {%endif%}
 
+                </div>
             </div>
+                <div class="row">
+                    <div class="col-md-4">
+                            <h2 id="s">Add student:</h2>
+                            <div id="input-control" style="height:50%;overflow:scroll;">
+                                <form action="" method="post">
+                                    <div class="form-group">
+                                        <label for="name">name:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="name" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ag">age:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="ag" aria-describedby="emailHelp" placeholder="age" name="age">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="de">address:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="add" aria-describedby="emailHelp" placeholder="address" name="address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ag">email:</label>
+                                        
+                                        <input type="text" class="form-control" id="ag" aria-describedby="emailHelp" placeholder="email (optional)" name="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gpa">gpa:</label>
+                                        
+                                        <input type="text" class="form-control" id="gpa" aria-describedby="emailHelp" placeholder="gpa (optional)" name="gpa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ge">gender:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="ge" placeholder="gender" name="gender">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ph">phone number:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="ph" placeholder="phone" name="phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sec">secret code:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="sec" placeholder="secretcode" name="secretcode">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="add">SAVE</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
         </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="../static/js/bootstrap.js"></script>
-</body>
+    </body>
 </html>
