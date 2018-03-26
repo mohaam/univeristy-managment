@@ -1,6 +1,7 @@
 from flask import Flask ,request,render_template,redirect,url_for,flash,session,jsonify
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
+
 engine = create_engine('mysql+mysqlconnector://root:@localhost:3306/sis')
 sessionDB = Session(engine)
 
@@ -15,7 +16,7 @@ def index():
         if job == 'admin':
             result = sessionDB.execute("SELECT id FROM admin WHERE secretcode = :code",{"code":code}).fetchone()
             print(result.id)
-            if result ==None:
+            if result is None:
                 return "wrong"
             else:
                 session['id']=result.id
@@ -23,7 +24,14 @@ def index():
 
         if job == 'student':
             result =  sessionDB.execute("SELECT ID FROM student WHERE secretcode = :code",{"code":code}).fetchone()
-            return "test"
+            if result is None:
+                return "wrong"
+            else:
+                pass
+
+        if job == 'teacher':
+            pass
+
 
     else:
         return render_template('index.html')
@@ -72,6 +80,16 @@ def admin(id):
                     return "wrong information"
                 else:
                     return redirect(url_for('coursescontrol', id=id, dep_name=deparment, prog_name=program, level=level))
+            if who == "times":
+                program = request.form ['program']
+                level = request.form['level']
+
+                result = sessionDB.execute("SELECT * FROM program WHERE name = :program and level = :level",{"program": program, "level": level}).fetchone()
+
+                if result == []:
+                    return "wrong"
+                else:
+                    return redirect(url_for('timescontrol', id=id, prog_name=program, level=level))
 
 
         else:
@@ -197,6 +215,32 @@ def courses_control_ajax ():
         sessionDB.execute("UPDATE course SET "+what+" = :newinfo WHERE code = :code",{"newinfo":newinfo,"code":code})
         sessionDB.commit()
 
+
+
+@app.route('/admin/<int:id>/timescontrol/<string:prog_name>/<int:level>',methods=['POST','GET'])
+def timescontrol(id,prog_name,level):
+    if session['id'] == id:
+        result = sessionDB.execute(
+            "SELECT * FROM course_has_weekdays WHERE course_program_name = :prog_name and course_program_level = :level ",{"prog_name": prog_name,"level": level}).fetchall()
+        if request.method == 'POST':
+            day = request.form['day']
+            coursecode = request.form['coursecode']
+            print(coursecode)
+            type = request.form['type']
+            from1 = request.form['from']
+            to = request.form['to']
+
+            if day =="" or coursecode == "" or type =="" or from1 =="" or to =="":
+                return render_template('times-control.html', result=result, alret=" * required field")
+            else:
+                sessionDB.execute(
+                    "INSERT INTO course_has_weekdays (course_code,course_program_level,course_program_name,weekdays_day,type,from,to) VALUES(:coursecode,:level,:prog_name,:day,:type,:from1,:to)",{"coursecode":coursecode,"level":level,"prog_name":prog_name,"day":day,"type":type,"from1":from1,"to":to})
+                sessionDB.commit()
+                return redirect(url_for('timescontrol',id=id,prog_name=prog_name, level=level))
+        else:
+
+            print(result)
+            return render_template('times-control.html', result=result ,alret = "")
 
 if __name__ == '__main__':
     app.secret_key = 'super_'
