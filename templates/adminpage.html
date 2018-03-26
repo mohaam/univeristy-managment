@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script>
@@ -11,6 +11,7 @@
             document.querySelector('#form1').style.visibility ="hidden"
             document.querySelector('#form2').style.visibility ="hidden"
             document.querySelector('#form3').style.visibility ="hidden"
+            document.querySelector('#form4').style.visibility ="hidden"
             document.querySelector('#st').onclick= function(){
                 document.querySelector('#form1').style.visibility ="visible"
             }
@@ -19,6 +20,10 @@
             }
             document.querySelector('#dep').onclick= function(){
                 document.querySelector('#form3').style.visibility ="visible"
+            }
+            document.querySelector('#times').onclick= function()
+            {
+                document.querySelector('#form4').style.visibility ="visible"
             }
         });
     </script>
@@ -75,9 +80,27 @@
                 </form>
             </div>
         </div>
+        
+        <div class=" row">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button" class="btn btn-info" id="times">times-control</button>
+                <form action="{{url_for('admin',id = id)}}" method="post" id="form4">
+                    <div class="form-group">
+                        <label for="de">program:</label>
+                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="program" name="program">
+                    </div>
+                    <div class="form-group">
+                        <label for="de">level:</label>
+                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="level" name="level">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" name="btn" value="times">Get</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
 </body>
 </html>
