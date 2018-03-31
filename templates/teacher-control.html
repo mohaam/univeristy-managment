@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Title</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="{{url_for('static',filename='js/teacher-control.js')}}"></script>
+        <script src="{{url_for('static',filename='js/student-control.js')}}"></script>
         <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
@@ -30,15 +30,15 @@
                             {% for teacher in result%}
                                 <tbody>
                                     <tr class="table-success">
-                                        <td data-id="{{teacher.id}}" data-info="name">{{teacher.name}} </td>
-                                        <td data-id="{{teacher.id}}" data-info="age">{{teacher.age}} </td>
-                                        <td data-id="{{teacher.id}}" data-info="address">{{teacher.address}}</td>
-                                        <td data-id="{{teacher.id}}" data-info="sex">{{teacher.sex}}</td>
-                                        <td data-id="{{teacher.id}}" data-info="email">{{teacher.department_name}}</td>
-                                        <td data-id="{{teacher.id}}" data-info="phonenumber">{{teacher.program_graduated}}</td>
-                                        <td data-id="{{teacher.id}}" data-info="phonenumber">{{teacher.secretcode}}</td>
+                                        <td data-id="{{teacher.id}}" data-info="name" data-table = "teacher">{{teacher.name}} </td>
+                                        <td data-id="{{teacher.id}}" data-info="age" data-table = "teacher">{{teacher.age}} </td>
+                                        <td data-id="{{teacher.id}}" data-info="address" data-table = "teacher">{{teacher.address}}</td>
+                                        <td data-id="{{teacher.id}}" data-info="sex" data-table = "teacher">{{teacher.sex}}</td>
+                                        <td data-id="{{teacher.id}}" data-info="department_name" data-table = "teacher">{{teacher.department_name}}</td>
+                                        <td data-id="{{teacher.id}}" data-info="program_graduated" data-table = "teacher">{{teacher.program_graduated}}</td>
+                                        <td data-id="{{teacher.id}}" data-info="secretcode" data-table = "teacher">{{teacher.secretcode}}</td>
                                        
-                                        <th ><button type="button" class="btn btn-danger" data-id="{{teacher.id}}" id="del">Delete</button>
+                                        <th ><button type="button" class="btn btn-danger" data-id="{{teacher.id}}" data-table = "teacher" id="del">Delete</button>
                                         </th>
                                     </tr>
                                 </tbody>

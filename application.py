@@ -30,15 +30,20 @@ def index():
                 pass
 
         if job == 'teacher':
-            pass
+            result = sessionDB.execute("SELECT id , name ,department_name, program_graduated FROM teacher WHERE secretcode = :code",{"code":code}).fetchone()
 
+            if result is None:
+                return "wrong"
+            else:
+                session['te_id'] = result.id
+                return redirect(url_for('teacher',id=result.id,name=result.name,prog_name= result.program_graduated,dep_name = result.department_name))
 
     else:
         return render_template('index.html')
 
 #admin workspace
 @app.route('/admin/<int:id>/',methods=['POST','GET'])
-#let admin choose for links what he want
+#let admin choose the panel control he want testing debuging forget
 def admin(id):
     if session['id'] == id:
         if request.method == 'POST':
@@ -90,13 +95,13 @@ def admin(id):
                     return "wrong"
                 else:
                     return redirect(url_for('timescontrol', id=id, prog_name=program, level=level))
-
-
+            if who == "department":
+                return redirect(url_for('departmentcontrol',id=id))
         else:
             return render_template('adminpage.html', id=id)
 
 @app.route('/admin/<int:id>/studentscontrol/<string:dep_name>/<string:prog_name>/<int:level>/',methods=['POST','GET'])
-#let admin to choose the what deparment and program to control
+
 def studentcontrol(id,dep_name,prog_name,level):
     if session['id'] == id:
         result = sessionDB.execute(
@@ -129,21 +134,21 @@ def studentcontrol(id,dep_name,prog_name,level):
 def student_control_ajax():
     do =request.form['do']
     id =request.form['id']
+    table = request.form['table']
     if do == "delete":
-        sessionDB.execute("DELETE FROM student WHERE ID = :id",{"id":id})
+        sessionDB.execute("DELETE FROM "+table+" WHERE ID = :id",{"id":id})
         sessionDB.commit()
         return jsonify({"del":'sucess'})
     elif do == "edit":
         what =request.form['what']
         newinfo = request.form['newinfo']
-        sessionDB.execute("UPDATE student SET "+what+" = :newinfo WHERE ID = :id",{"newinfo":newinfo,"id":id})
+        sessionDB.execute("UPDATE "+table+" SET "+what+" = :newinfo WHERE ID = :id",{"newinfo":newinfo,"id":id})
         sessionDB.commit()
 
 @app.route('/admin/<int:id>/teachercontrol/<string:dep_name>/',methods=['POST','GET'])
 def teachercontrol(id,dep_name):
     if session['id'] == id:
-        result = sessionDB.execute(
-            "SELECT * FROM teacher WHERE department_name = :dep_name ",{"dep_name": dep_name}).fetchall()
+        result = sessionDB.execute("SELECT * FROM teacher WHERE department_name = :dep_name ",{"dep_name": dep_name}).fetchall()
         if request.method == 'POST':
             name = request.form['name']
             age = request.form['age']
@@ -162,20 +167,6 @@ def teachercontrol(id,dep_name):
             print(result)
             return render_template('teacher-control.html', result=result ,alret = "")
 
-@app.route('/teacher_control_ajax',methods=['POST'])
-def teacher_control_ajax ():
-    do =request.form['do']
-    id =request.form['id']
-    if do == "delete":
-        sessionDB.execute("DELETE FROM teacher WHERE id = :id",{"id":id})
-        sessionDB.commit()
-        return jsonify({"del":'sucess'})
-    elif do == "edit":
-        what =request.form['what']
-        newinfo = request.form['newinfo']
-        sessionDB.execute("UPDATE teacher SET "+what+" = :newinfo WHERE id = :id",{"newinfo":newinfo,"id":id})
-        sessionDB.commit()
-
 
 @app.route('/admin/<int:id>/coursescontrol/<string:dep_name>/<string:prog_name>/<int:level>',methods=['POST','GET'])
 def coursescontrol(id,dep_name,prog_name,level):
@@ -187,13 +178,13 @@ def coursescontrol(id,dep_name,prog_name,level):
             code = request.form['code']
             fullmark = request.form['full']
             passmark = request.form['pass']
-
+            optional = request.form['optional']
             hours = request.form['hours']
 
-            if name =="" or code == "" or fullmark =="" or passmark =="":
+            if name =="" or code == "" or fullmark =="" or passmark =="" or optional == "":
                 return render_template('courses-control.html', result=result, alret=" * required field")
             else:
-                sessionDB.execute("INSERT INTO course(code,name,full_mark,pass_mark,program_level,program_name,program_department_name,hours) VALUES(:code,:name,:fullmark,:passmark,:level,:prog_name,:dep_name,:hours)",{"code":code,"name":name,"fullmark":fullmark,"passmark":passmark,"level":level,"prog_name":prog_name,"dep_name":dep_name,"hours":hours})
+                sessionDB.execute("INSERT INTO course(id,name,full_mark,pass_mark,program_level,program_name,program_department_name,hours,optional) VALUES(:code,:name,:fullmark,:passmark,:level,:prog_name,:dep_name,:hours,:optional)",{"code":code,"name":name,"fullmark":fullmark,"passmark":passmark,"level":level,"prog_name":prog_name,"dep_name":dep_name,"hours":hours,"optional":optional})
                 sessionDB.commit()
                 return redirect(url_for('coursescontrol',id=id,dep_name=dep_name,prog_name=prog_name,level=level))
         else:
@@ -201,46 +192,163 @@ def coursescontrol(id,dep_name,prog_name,level):
             print(result)
             return render_template('courses-control.html', result=result ,alret = "")
 
-@app.route('/courses_control_ajax',methods=['POST'])
-def courses_control_ajax ():
-    do =request.form['do']
-    code =request.form['id']
-    if do == "delete":
-        sessionDB.execute("DELETE FROM course WHERE code = :code",{"code":code})
-        sessionDB.commit()
-        return jsonify({"del":'sucess'})
-    elif do == "edit":
-        what =request.form['what']
-        newinfo = request.form['newinfo']
-        sessionDB.execute("UPDATE course SET "+what+" = :newinfo WHERE code = :code",{"newinfo":newinfo,"code":code})
-        sessionDB.commit()
-
-
 
 @app.route('/admin/<int:id>/timescontrol/<string:prog_name>/<int:level>',methods=['POST','GET'])
 def timescontrol(id,prog_name,level):
     if session['id'] == id:
+
         result = sessionDB.execute(
-            "SELECT * FROM course_has_weekdays WHERE course_program_name = :prog_name and course_program_level = :level ",{"prog_name": prog_name,"level": level}).fetchall()
+            "select sis.times.weekdays_day,sis.times.id,sis.times.course_id,sis.times.type,sis.course.name,sis.times.fromm,sis.times.too,sis.times.place from sis.times inner join sis.course on sis.course.id = sis.times.course_id where sis.times.course_program_name = :prog_name and sis.times.course_program_level = :level ORDER BY sis.times.weekdays_index ",{"prog_name": prog_name,"level": level}).fetchall()
         if request.method == 'POST':
-            day = request.form['day']
+            weekday = request.form.get('weekday')
+            print(weekday)
+            day =weekday[1:]
+            index=weekday[0]
             coursecode = request.form['coursecode']
             print(coursecode)
             type = request.form['type']
             from1 = request.form['from']
             to = request.form['to']
+            place =request.form['place']
 
-            if day =="" or coursecode == "" or type =="" or from1 =="" or to =="":
+            if weekday =="" or coursecode == "" or type =="" or from1 =="" or to =="" or place == "":
                 return render_template('times-control.html', result=result, alret=" * required field")
             else:
                 sessionDB.execute(
-                    "INSERT INTO course_has_weekdays (course_code,course_program_level,course_program_name,weekdays_day,type,from,to) VALUES(:coursecode,:level,:prog_name,:day,:type,:from1,:to)",{"coursecode":coursecode,"level":level,"prog_name":prog_name,"day":day,"type":type,"from1":from1,"to":to})
+                    "INSERT INTO times (course_id,course_program_level,course_program_name,weekdays_day,weekdays_index,type,fromm,too,place) VALUES(:coursecode,:level,:prog_name,:day,:index,:type,:from1,:to,:place)",{"coursecode":coursecode,"level":level,"prog_name":prog_name,"day":day,"type":type,"from1":from1,"to":to,"index":index,"place":place})
                 sessionDB.commit()
                 return redirect(url_for('timescontrol',id=id,prog_name=prog_name, level=level))
         else:
 
             print(result)
             return render_template('times-control.html', result=result ,alret = "")
+
+@app.route('/admin<int:id>/departmentcontrol/',methods=['POST','GET'])
+def departmentcontrol(id):
+    if session['id'] == id:
+        result = sessionDB.execute('select * from department').fetchall()
+        result1 = sessionDB.execute('select name , id from teacher').fetchall()
+        if request.method == 'POST':
+            dep_name = request.form['depname']
+            sessionDB.execute('INSERT INTO department(name) VALUES(:dep_name)',{"dep_name":dep_name})
+            sessionDB.commit()
+            return redirect(url_for('departmentcontrol',id=id))
+        else:
+            return render_template('department-control.html',result1=result1,result=result)
+
+@app.route('/department_ajax',methods=['POST'])
+def department_ajax():
+    dep_name=request.form['depname']
+    what = request.form['what']
+    newinfo = request.form['newinfo']
+    print(dep_name)
+    print(what)
+    print(newinfo)
+    sessionDB.execute("UPDATE department  SET " + what + " = :newinfo WHERE name = :dep_name", {"newinfo": newinfo, "dep_name": dep_name})
+    sessionDB.commit()
+# this is the end of admin
+
+#teacher start form here
+
+@app.route('/teacher/<int:id>/<string:name>/<string:prog_name>/<string:dep_name>',methods = ['POST','GET'])
+def teacher(id,name,prog_name,dep_name):
+    if session['te_id'] == id:
+        result = sessionDB.execute("select sis.times.weekdays_index ,sis.times.weekdays_day, sis.times.course_id , sis.course.name,sis.times.fromm,sis.times.too,sis.times.place from sis.times inner join sis.teachercourses on sis.times.course_id = sis.teachercourses.course_code inner join sis.course on sis.course.id = sis.teachercourses.course_code where sis.teachercourses.teacher_id= :id and sis.times.type = 'lecture' ORDER BY sis.times.weekdays_index ",{"id":id}).fetchall()
+        print(result)
+
+        dep_manage = sessionDB.execute("select teacher_id from department where teacher_id = :id",{"id":id}).fetchone()
+        prog_manage = sessionDB.execute("select program_manage from teacher where id = :id",{"id":id}).fetchone()
+
+        print(dep_manage)
+        print(prog_manage)
+        if request.method == 'POST':
+            coursecode=request.form['coursecode']
+            type = request.form['type']
+
+            if coursecode == "":
+                return render_template('teacher-page.html', result=result, result1=None, result2=[],alret="* required field",prog_manage=prog_manage,dep_manage=dep_manage,dep_name=dep_name,id=id)
+
+            result1 =sessionDB.execute(" select * from exam where course_code = :coursecode and teacher_id = :id and type = :type",{"coursecode":coursecode,"id":id,"type":type}).fetchone()
+            result2 =sessionDB.execute(" select  sis.studentexam.student_ID,sis.studentexam.student_mark, sis.student.name from sis.studentexam inner join sis.student on sis.student.id = sis.studentexam.student_ID  where exam_course_code = :coursecode and exam_id = :id",{"coursecode":coursecode,"id":result1.id}).fetchall()
+            print(result1)
+            print(result2)
+
+            return render_template('teacher-page.html',result = result,result1 =result1, result2 = result2,prog_manage=prog_manage,dep_manage=dep_manage,dep_name=dep_name,id=id)
+        else:
+            return render_template('teacher-page.html' , result=result ,result1=None,result2=[],alret="",prog_manage=prog_manage,dep_manage=dep_manage,dep_name=dep_name,id=id)
+
+@app.route('/teacher_ajax',methods = ['POST'])
+def teahcer_ajax():
+    mark = request.form['mark']
+    id = request.form['id']
+    examid = request.form['examid']
+    type = request.form['type']
+    print(id)
+    print(mark)
+    sessionDB.execute("update studentexam set student_mark = :mark where student_ID = :id and exam_type = :type and exam_id = :examid",{"id":id,"mark":mark,"examid":examid,"type":type})
+    sessionDB.commit()
+
+    return jsonify({"insert":"sucsess"})
+
+#end of teacher
+
+# department manager start form here
+@app.route('/deparment_manager/<int:id>/<string:dep_name>/',methods=['POST','GET'])
+def dep_manager(id,dep_name):
+    if session['te_id'] == id:
+        teachers = sessionDB.execute('select name , id from teacher where department_name = :dep_name',{"dep_name":dep_name}).fetchall()
+        programs = sessionDB.execute('select name from program where department_name = :dep_name and level = 1',{"dep_name":dep_name}).fetchall()
+        print(teachers)
+        print(programs)
+        if request.method == 'POST':
+            who = request.form['btn']
+            if who == 'program':
+                name= request.form['program']
+
+                if name =="" :
+                    return render_template('dep-manager.html', teachers=teachers, programs=programs,alret="* required field")
+                for level in range(1,5):
+                    sessionDB.execute('INSERT INTO program(name,department_name,level) VALUES(:name,:dep_name,:level)',{"name":name,"dep_name":dep_name,"level":level})
+                sessionDB.commit()
+                return redirect(url_for('dep_manager', id=id, dep_name=dep_name))
+            if who == 'hour':
+                program = request.form.get('program')
+                hours = request.form['hours']
+                level = request.form.get('level')
+                sessionDB.execute("update program set hours = :hours where name = :program and level = :level " ,{"hours":hours,"level":level,"program":program})
+                sessionDB.commit()
+                return redirect(url_for('dep_manager',id=id,dep_name=dep_name))
+            if who == 'manager':
+                program = request.form.get('program')
+                teacher = request.form.get('teacher')
+                print(teacher)
+                print(program)
+                #check the last manager
+                lastmanger= sessionDB.execute("select id from teacher where program_manage = :program",{"program":program}).fetchone()[0]
+                print(lastmanger)
+                if lastmanger is not None:
+                    # remove the lastmanger
+                    sessionDB.execute("update teacher set program_manage = ''  where id = :lastmanger ",{"lastmanger": lastmanger})
+                    sessionDB.commit()
+
+                    # add the new one
+
+                    sessionDB.execute("update teacher set program_manage = :program where id = :teacher " ,{"teacher":teacher,"program":program})
+                    sessionDB.commit()
+                    return redirect(url_for('dep_manager',id=id,dep_name=dep_name))
+                else:
+                    sessionDB.execute("update teacher set program_manage = :program where id = :teacher " ,{"teacher":teacher,"program":program})
+                    sessionDB.commit()
+                    return redirect(url_for('dep_manager',id=id,dep_name=dep_name))
+
+        else:
+            return render_template('dep-manager.html',teachers=teachers,programs=programs,alret="")
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.secret_key = 'super_'

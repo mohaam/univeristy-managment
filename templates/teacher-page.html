@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="{{url_for('static',filename='js/teacherpage1.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-xs-4">
+                <button type="button" class="btn btn-info">lecture of courses</button>
+
+            </div>
+
+            <div class="col-md-8 col-xs-4">
+                <div>
+                   <table class="table table-striped">
+                      <thead>
+                        <tr>
+                        <th scope="col">day</th>
+                          <th scope="col">course code</th>
+                          <th scope="col">course name</th>
+                          <th scope="col">from</th>
+                            <th scope="col">to</th>
+                            <th scope="col">place</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                            {% set count = [1] %} 
+                            {% set flag = {'day':result[0][0]} %}
+                            {% for time in result %}
+                            
+                                    {% if flag['day'] != time.weekdays_day %} 
+                                        {% set count = [1] %}
+                                        
+                                    {%endif%}
+                                    {% if flag.update( {'day' : time.weekdays_day} )  %}{%endif%}
+                                    <tr >
+                                        {% if count[0] == 1 %}
+                                            <th>{{time.weekdays_day}}</th>
+                                        {%endif%}
+                                        {% if count[0] > 1 %}
+                                            <th></th>
+                                        {%endif%}
+                                        <td >{{time.course_id}}</td>
+                                        <td >{{time.name}}</td>
+                                        <td >{{time.fromm}}</td>
+                                        <td >{{time.too}}</td>
+                                        <td >{{time.place}}</td>
+                                        {% if count.append(count.pop() + 1) %}{%endif%}
+                                                
+                                    </tr>
+                            
+                            {%endfor%}
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 col-xs-4">
+                 <button type="button" class="btn btn-info">put marks</button>
+                <form action="" method="post">
+                    <span style="color: red"> {{alret}} </span>
+                      <div class="form-group">
+                         
+                        <label for="coursecode">course code</label>
+                        <input type="text" class="form-control" id="examecode" placeholder="coursecode" name="coursecode">
+                      </div>
+                        <span style="color: red"> {{alret}} </span>
+                        <div class="form-group">
+                         
+                        <label for="type">type</label>
+                        <input type="text" class="form-control" id="type" placeholder="type" name="type">
+                      </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                {%if result1 != None %}
+                    <div>
+                       
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              
+                                <th scope="col">coursecode</th>
+                              <th scope="col">type</th>
+                              <th scope="col">full mark</th>
+                              <th scope="col">pass mark</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                       
+                            <tr>
+                              
+                                <th scope="row">{{result1.course_code}}</th>
+                              <td>{{result1.type}}</td>
+                              <td>{{result1.full_mark}}</td>
+                              <td>{{result1.passing_mark}}</td>
+                            </tr>
+                      
+                          </tbody>
+                        </table>
+                        
+                    </div><br>
+                {%endif%}
+                {%if result2 != []%}
+                    <div>
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">id</th>
+                              <th scope="col">name</th>
+                              <th scope="col">mark</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        {% for student in result2 %}
+                            <tr>
+                              <th scope="row">{{student.student_ID}}</th>
+                              <td>{{student.name}}</td>
+                              <td data-id="{{student.student_ID}}" data-type="{{result1.type}}" data-examid="{{result1.id}}" id="change">{{student.student_mark}}</td>
+                            </tr>
+                        {%endfor%}
+                          </tbody>
+                        </table>
+                    </div>
+                {%endif%}
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10%;">
+            <div class="col-md-4">
+                {%if prog_manage[0] != None %}
+                    <a href="#" class="badge badge-info">Mangement-panel</a>
+                {%endif%}
+                {%if dep_manage != None  %}
+                <a href="{{url_for('dep_manager',id=id,dep_name=dep_name)}}" class="badge badge-info">Mangement-panel</a>
+              
+                {%endif%}
+            </div>
+        </div>
+       
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+
+  </body>
+</html>

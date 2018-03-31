@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+      
+    <script src="{{url_for('static',filename='js/dep-control.js')}}"></script>
+    <title>Hello, world!</title>
+  </head>
+  <body>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                  <div>
+                      <table class="table">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">department name</th>
+                              <th scope="col">manager id</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        {%for dep in result%}
+                            <tr>
+                              <td data-key="{{dep.name}}" data-info="name"  id="change">{{dep.name}}</td>
+                              <td data-key="{{dep.name}}" data-info="teacher_id"  id="change">{{dep.teacher_id}}</td>
+                            </tr>
+                        {%endfor%}
+                          </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4" ></div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                  <div>
+                      <table class="table">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">teacher name</th>
+                              <th scope="col">id</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        {%for teacher in result1%}
+                            <tr>
+                              <td>{{teacher.name}}</td>
+                              <td>{{teacher.id}}</td>
+                            </tr>
+                        {%endfor%}
+                          </tbody>
+                    </table>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-4"></div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                  <form action="" method="post">
+                        <div class="form-group">
+                            <label for="dep">department name</label>
+                            <input type="text" class="form-control" id="dep" aria-describedby="emailHelp" placeholder="Enter department name "  name="depname">
+                              
+                        </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4"></div>
+          </div>
+      </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+
+  </body>
+</html>

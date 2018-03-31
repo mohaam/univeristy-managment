@@ -9,35 +9,183 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container">
+            
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     {%if result != []%}
-                    <div>
-                        <table class=" table result ">
-                            <thead class="thead-dark">
-                                <tr class="table-success">
+                    <div style="height: 350px; overflow: scroll;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
                                     <th scope="col">day</th>
                                     <th scope="col">course code</th>
+                                    <th scope="col">name</th>
                                     <th scope="col">type</th>
                                     <th scope="col">from</th>
                                     <th scope="col">to</th>
                                     <th scope="col">Delete</th>
                                 </tr>
                             </thead>
-                            {% for time in result%}
+                                <!--  code 5ra awii 3ndi fkra bs msh dlw3ti !-->
                                 <tbody>
-                                    <tr class="table-success">
-                                        <td >{{time.weekdays_day}}</td>
-                                        <td >{{time.course_code}}</td>
-                                        <td >{{time.type}}</td>
-                                        <td >{{time.from}}</td>
-                                        <td >{{time.to}}</td>
-                                        <td ><button>delete</button></td>
+                                    <!-- saturday !-->
+                            {% set count = [1] %} 
+                            {% set flag = {'day':result[0][0]} %}
+                            {% for time in result %}
+                            
+                                    {% if flag['day'] != time.weekdays_day %} 
+                                        {% set count = [1] %}
                                         
+                                    {%endif%}
+                                    {% if flag.update( {'day' : time.weekdays_day} )  %}{%endif%}
+                                    <tr >
+                                        {% if count[0] == 1 %}
+                                            <th>{{time.weekdays_day}}</th>
+                                        {%endif%}
+                                        {% if count[0] > 1 %}
+                                            <th></th>
+                                        {%endif%}
+                                        <th >{{time.course_id}}</th>
+                                        <th >{{time.name}}</th>
+                                        <td data-id="{{time.id}}" data-info="type" data-table = "times">{{time.type}}</td>
+                                        <td data-id="{{time.id}}" data-info="fromm" data-table = "times">{{time.fromm}}</td>
+                                        <td data-id="{{time.id}}" data-info="too" data-table = "times">{{time.too}}</td>
+                                        <th><button type="button" class="btn btn-danger" data-id="{{time.id}}" data-table = "times" id="del">Delete</button></th>
+                                        {% if count.append(count.pop() + 1) %}{%endif%}
+                                                
                                     </tr>
-                                </tbody>
+                                    
+                            
                             {%endfor%}
+                                    
+                                    <!-- sunday !--
+                            {% set count = [1] %} 
+                                    
+                            {% for time in result %}
+                            
+                                    {% if time.weekdays_day == 'sunday' %}
+                                       
+                                            <tr >
+                                                {% if count[0] == 1 %}
+                                                    <th>{{time.weekdays_day}}</th>
+                                                {%endif%}
+                                                {% if count[0] > 1 %}
+                                                    <th></th>
+                                                {%endif%}
+                                                <td >{{time.course_code}}</td>
+                                                <td >{{time.type}}</td>
+                                                <td >{{time.fromm}}</td>
+                                                <td >{{time.too}}</td>
+                                                <td ><button>delete</button></td>
+                                                {% if count.append(count.pop() + 1) %}{% endif %}
+                                                
+                                            </tr>
+                                    {%endif%}
+
+                            {%endfor%}
+                                    <!-- monday --
+                            {% set count = [1] %} 
+                                    
+                            {% for time in result %}
+                            
+                                    {% if time.weekdays_day == 'monday' %}
+                                       
+                                            <tr >
+                                                {% if count[0] == 1 %}
+                                                    <th>{{time.weekdays_day}}</th>
+                                                
+                                                {%endif%}
+                                                {% if count[0] > 1 %}
+                                                    <th></th>
+                                                {%endif%}
+                                                <td >{{time.course_code}}</td>
+                                                <td >{{time.type}}</td>
+                                                <td >{{time.fromm}}</td>
+                                                <td >{{time.too}}</td>
+                                                <td ><button>delete</button></td>
+                                                {% if count.append(count.pop() + 1) %}{% endif %}
+                                                
+                                            </tr>
+                                    {%endif%}
+                            {%endfor%}
+                            <!-- tuesday !--
+                                    
+                            {% set count = [1] %} 
+                                    
+                            {% for time in result %}
+                            
+                                    {% if time.weekdays_day == 'tuesday' %}
+                                       
+                                            <tr >
+                                                {% if count[0] == 1 %}
+                                                    <th>{{time.weekdays_day}}</th>
+                                                {%endif%}
+                                                {% if count[0] > 1 %}
+                                                    <th></th>
+                                                {%endif%}
+                                                <td >{{time.course_code}}</td>
+                                                <td >{{time.type}}</td>
+                                                <td >{{time.fromm}}</td>
+                                                <td >{{time.too}}</td>
+                                                <td ><button>delete</button></td>
+                                                {% if count.append(count.pop() + 1) %}{% endif %}
+                                                
+                                            </tr>
+                                    {%endif%}
+                            {%endfor%}
+                                    
+                                    <!-- wednesday !--
+                            {% set count = [1] %} 
+                                    
+                            {% for time in result %}
+                            
+                                    {% if time.weekdays_day == 'wednesday' %}
+                                       
+                                            <tr >
+                                                {% if count[0] == 1 %}
+                                                    <th>{{time.weekdays_day}}</th>
+                                                {%endif%}
+                                                {% if count[0] > 1 %}
+                                                    <th></th>
+                                                {%endif%}
+                                                <td >{{time.course_code}}</td>
+                                                <td >{{time.type}}</td>
+                                                <td >{{time.fromm}}</td>
+                                                <td >{{time.too}}</td>
+                                                <td ><button>delete</button></td>
+                                                {% if count.append(count.pop() + 1) %}{% endif %}
+                                                
+                                            </tr>
+                                    {%endif%}
+                            {%endfor%}
+                                    
+                                <!-- thursday !--
+                            {% set count = [1] %} 
+                                    
+                            {% for time in result %}
+                            
+                                    {% if time.weekdays_day == 'thursday' %}
+                                       
+                                            <tr >
+                                                {% if count[0] == 1 %}
+                                                    <th>{{time.weekdays_day}}</th>
+                                                {%endif%}
+                                                {% if count[0] > 1 %}
+                                                    <th></th>
+                                                {%endif%}
+                                                <td >{{time.course_code}}</td>
+                                                <td >{{time.type}}</td>
+                                                <td >{{time.fromm}}</td>
+                                                <td >{{time.too}}</td>
+                                                <td ><button>delete</button></td>
+                                                {% if count.append(count.pop() + 1) %}{% endif %}
+                                                
+                                            </tr>
+                                    {%endif%}
+                            {%endfor%}
+                            <!-- -->
+                                </tbody>
                         </table>
                     </div>
                     {%endif%}
@@ -52,7 +200,16 @@
                                     <div class="form-group">
                                         <label for="day">day:</label>
                                         <span style="color: red;">{{alret}}</span>
-                                        <input type="text" class="form-control" id="day" aria-describedby="emailHelp" placeholder="day" name="day">
+                                        <select class="form-control" name="weekday">
+                                            
+                                            <option value="1saturday">saturday</option>
+                                            <option value="2sunday">sunday</option>
+                                            <option value="3monday">monday</option>
+                                            <option value="4tuesday">tuesday</option>
+                                            <option value="5wednesday">wednesday</option>
+                                            <option value="6thursday">thursday</option>
+                                            
+                                        </select>                                    
                                     </div>
                                     <div class="form-group">
                                         <label for="course">course code:</label>
@@ -73,6 +230,11 @@
                                         <label for="to">to:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="to" aria-describedby="emailHelp" placeholder="to" name="to">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="place">place:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="place" aria-describedby="emailHelp" placeholder="place" name="place">
                                     </div>
                                     <button type="submit" class="btn btn-primary" id="add">SAVE</button>
                                 </form>

@@ -34,18 +34,18 @@
                             {% for student in result%}
                                 <tbody>
                                     <tr class="table-success">
-                                        <td data-id="{{student.ID}}" data-info="name">{{student.name}} </td>
-                                        <td data-id="{{student.ID}}" data-info="age">{{student.age}} </td>
-                                        <td data-id="{{student.ID}}" data-info="address">{{student.address}}</td>
-                                        <td data-id="{{student.ID}}" data-info="sex">{{student.sex}}</td>
-                                        <td data-id="{{student.ID}}" data-info="email">{{student.email}}</td>
-                                        <td data-id="{{student.ID}}" data-info="phonenumber">{{student.phonenumber}}</td>
-                                        <td data-id="{{student.ID}}" data-info="gpa">{{student.gpa}}</td>
-                                        <td data-id="{{student.ID}}" data-info="program_level">{{student.program_level}} </td>
-                                        <td data-id="{{student.ID}}" data-info="program_name">{{student.program_name}}</td>
-                                        <td data-id="{{student.ID}}" data-info="department_name" >{{student.department_name}}</td>
-                                        <td data-id="{{student.ID}}" data-info="secretcode">{{student.secretcode}}</td>
-                                        <th ><button type="button" class="btn btn-danger" data-id="{{student.ID}}" id="del">Delete</button>
+                                        <td data-id="{{student.ID}}" data-info="name" data-table = "student">{{student.name}} </td>
+                                        <td data-id="{{student.ID}}" data-info="age" data-table = "student">{{student.age}} </td>
+                                        <td data-id="{{student.ID}}" data-info="address" data-table = "student">{{student.address}}</td>
+                                        <td data-id="{{student.ID}}" data-info="sex" data-table = "student">{{student.sex}}</td>
+                                        <td data-id="{{student.ID}}" data-info="email" data-table = "student">{{student.email}}</td>
+                                        <td data-id="{{student.ID}}" data-info="phonenumber" data-table = "student">{{student.phonenumber}}</td>
+                                        <td data-id="{{student.ID}}" data-info="gpa" data-table = "student">{{student.gpa}}</td>
+                                        <td data-id="{{student.ID}}" data-info="program_level" data-table = "student">{{student.program_level}} </td>
+                                        <td data-id="{{student.ID}}" data-info="program_name" data-table = "student">{{student.program_name}}</td>
+                                        <td data-id="{{student.ID}}" data-info="department_name" data-table = "student" >{{student.department_name}}</td>
+                                        <td data-id="{{student.ID}}" data-info="secretcode" data-table = "student">{{student.secretcode}}</td>
+                                        <th ><button type="button" class="btn btn-danger" data-id="{{student.ID}}" data-table = "student" id="del">Delete</button>
                                         </th>
                                     </tr>
                                 </tbody>

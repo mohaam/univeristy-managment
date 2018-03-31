@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded',function(){
             data_send = new FormData();
             data_send.append('do','delete');
             data_send.append('id',btn.dataset.id);
+            data_send.append('table',btn.dataset.table);
             request.send(data_send);
         }
     });
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded',function(){
                     data_send.append('do','edit');
                     data_send.append('id',cell.dataset.id);
                     data_send.append('what',cell.dataset.info);
+                    data_send.append('table',cell.dataset.table);
                     data_send.append('newinfo',newinfo);
 
                     request.send(data_send);
