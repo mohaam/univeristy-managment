@@ -2,7 +2,7 @@ from flask import Flask ,request,render_template,redirect,url_for,flash,session,
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
-engine = create_engine('mysql+mysqlconnector://root:@localhost:3306/sis')
+engine = create_engine('mysql+mysqlconnector://root:test@localhost:3306/sis')
 sessionDB = Session(engine)
 
 
@@ -706,7 +706,7 @@ def program_manager_ajax():
         return jsonify({"edit": 1})
     else:
         try:
-            sessionDB.execute("DELETE FROM "+table+" WHERE ID = :id",{"id":id})
+            sessionDB.execute("DELETE FROM "+table+" WHERE ID = :id", {"id":id})
             sessionDB.commit()
         except:
             return jsonify({"delete": 0})
@@ -727,7 +727,7 @@ def logout():
 
 #end of program manager
 
-@app.route('/states',methods=['POST'])
+@app.route('/states', methods=['POST'])
 def states():
 
     state = int(request.form['state'])
@@ -757,7 +757,6 @@ def states():
 @app.route('/student/<int:id>/', methods=['POST', 'GET'])
 def student(id):
     if session['student_id'] == id:
-        # TODO: Activate the commented code when data is entered from admin, term = 2 is just for testing
         get_term = sessionDB.execute("select term from states where program_level = 1").fetchone()
         term = int(get_term.term)
 
@@ -823,8 +822,6 @@ def student(id):
                     sessionDB.commit()
                     return render_template('thanks.html')
                 else:
-                    # TODO: message flashing
-                    flash("Tezak kar3a")
                     return render_template(url_for('student', id=id))
             if who == 'summer':
                 value = request.form.getlist('check2')
@@ -842,17 +839,18 @@ def student(id):
                         sessionDB.commit()
                         return render_template('thanks.html')
                     else:
-                        # TODO: message flashing Or pumping the user to input data
                         return render_template('studentpage.html', subjects=result_subject_test, summer=result_summer,
-                                               final=result_final, score=result_score, id=id, alret="* 6 hours only",states=states)
+                                               final=result_final, score=result_score, id=id, alret="* 6 hours only",
+                                               states=states)
                 else:
                     return render_template('studentpage.html', subjects=result_subject_test, summer=result_summer,
-                                           final=result_final, score=result_score, id=id, alret="* Choose subjects",states =states)
+                                           final=result_final, score=result_score, id=id, alret="* Choose subjects",
+                                           states=states)
             if who == 'drop':
                 value = request.form['code']
                 if value:
                     exist = sessionDB.execute("select course_code from studentcourses where student_ID=:id and "
-                                              "course_code=:value",{"id": id, "value": value}).fetchone()
+                                              "course_code=:value", {"id": id, "value": value}).fetchone()
                     if exist:
                         sessionDB.execute("delete from studentcourses where student_ID=:id and course_code=:value",
                                           {"id": id, "value": value})
@@ -861,14 +859,12 @@ def student(id):
                     else:
                         return render_template('fail.html')
                 else:
-                    # TODO: message flashing Or pumping the user to input data
-                    flash("Tezak kar3a")
                     return redirect(url_for('student', id=id))
         else:
             # add result info to the code
             return render_template('studentpage.html', subjects=result_subject_test, summer=result_summer,
-                                   final=result_final, score=result_score, id=id,result_info=result_info,
-                                   studentcourses=studentcourses,result=result,states=states)
+                                   final=result_final, score=result_score, id=id, result_info=result_info,
+                                   studentcourses=studentcourses, result=result, states=states)
 
 
 def subject_calc(result_subjects, term, student_level, id):
@@ -971,7 +967,7 @@ def hours_calc(result_final, id):
     return new_hours
 
 
-def grade_calc(grade, hours, course_code,id):
+def grade_calc(grade, hours, course_code, id):
     if hours == 1:
         percentage = (grade * 100)/50
         if 60 <= percentage < 65:
@@ -982,19 +978,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     elif hours == 2:
         percentage = (grade * 100)/100
         if 60 <= percentage < 65:
@@ -1005,19 +1001,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     elif hours == 3:
         percentage = (grade * 100)/150
         if 60 <= percentage < 65:
@@ -1028,19 +1024,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     elif hours == 4: # Check if there is 4 credit hours subjects if not remove this portion of the code
         percentage = (grade * 100) / 200
         if 60 <= percentage < 65:
@@ -1051,19 +1047,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     sessionDB.commit()
 
 
@@ -1135,4 +1131,4 @@ def QP(course_code, id):
 if __name__ == '__main__':
     app.secret_key = 'super_'
     app.debug = True
-    app.run(host = '0.0.0.0',port=5000)
+    app.run(host='0.0.0.0', port=5000)
