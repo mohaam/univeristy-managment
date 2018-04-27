@@ -15,9 +15,13 @@
             document.querySelector('#table2').style.display ="none"
             document.querySelector('#table3').style.display ="none"
             document.querySelector('#table4').style.display ="none"
+            
+            states = document.querySelector('#states');
+            
+            console.log(states.dataset.subject)
             document.querySelector('#register').onclick= function(){
                 var off = document.querySelector('#form1');
-                if (off.style.display == "none"){
+                if (off.style.display == "none" && states.dataset.subject == 1){
                     off.style.display = "block";
                 }
                 else{
@@ -26,7 +30,7 @@
             }
             document.querySelector('#summer').onclick= function(){
                 var off = document.querySelector('#form2');
-                if (off.style.display == "none"){
+                if (off.style.display == "none" && states.dataset.summer == 1){
                     off.style.display = "block";
                 }
                 else{
@@ -35,7 +39,7 @@
             }
             document.querySelector('#drop').onclick= function(){
                 var off = document.querySelector('#form3');
-                if (off.style.display == "none"){
+                if (off.style.display == "none"  && states.dataset.dropp == 1){
                     off.style.display = "block";
                 }
                 else{
@@ -53,7 +57,7 @@
             }
             document.querySelector('#mid').onclick= function(){
                 var off = document.querySelector('#table2');
-                if (off.style.display == "none"){
+                if (off.style.display == "none" && states.dataset.work == 1){
                     off.style.display = "block";
                 }
                 else{
@@ -62,7 +66,7 @@
             }
             document.querySelector('#final').onclick= function(){
                 var off = document.querySelector('#table3');
-                if (off.style.display == "none"){
+                if (off.style.display == "none" && states.dataset.finall == 1){
                     off.style.display = "block";
                 }
                 else{
@@ -311,7 +315,7 @@
        
     </div>
     </div>
-
+    <div id="states" data-summer={{states.summer}} data-finall={{states.finall}} data-work={{states.work}} data-dropp={{states.dropp}} data-subject={{states.subject}} style="display: none;"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
 </body>
