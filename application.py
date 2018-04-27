@@ -23,7 +23,7 @@ def index():
             result = sessionDB.execute("SELECT id FROM admin WHERE secretcode = :code",{"code":code}).fetchone()
             print(result.id)
             if result is None:
-                return "wrong"
+                return render_template('index.html', alr="* secret code is wrong")
             else:
                 session['id']=result.id
                 return redirect(url_for('admin',id=result.id))
@@ -31,7 +31,7 @@ def index():
         if job == 'student':
             result =  sessionDB.execute("SELECT * FROM student WHERE secretcode = :code",{"code":code}).fetchone()
             if result is None:
-                return "wrong"
+                return render_template('index.html', alr="* secret code is wrong")
             else:
                 session['student_id'] = result.ID
                 return redirect(url_for('student', id=result.ID))
@@ -39,8 +39,9 @@ def index():
         if job == 'teacher':
             result = sessionDB.execute("SELECT id , name ,department_name, program_graduated FROM teacher WHERE secretcode = :code",{"code":code}).fetchone()
 
+
             if result is None:
-                return "wrong"
+                return render_template('index.html', alr="* secret code is wrong")
             else:
                 session['te_id'] = result.id
                 return redirect(url_for('teacher',id=result.id,name=result.name,prog_name= result.program_graduated,dep_name = result.department_name))
@@ -127,8 +128,23 @@ def admin(id):
                     return redirect(url_for('timescontrol', id=id, prog_name=program, level=level))
             if who == "department":
                 return redirect(url_for('departmentcontrol',id=id))
+            ############### depedns on control ############
+            if who == "depends":
+                program = program = request.form['program']
+                if program == "":
+                    return render_template('adminpage.html',id=id,alretti="* required information")
+                result = sessionDB.execute("SELECT * FROM program WHERE name = :program",
+                                           {"program": program}).fetchone()
+                if result is None:
+                    return render_template('adminpage.html', id=id, notexistti="*  program is not exist ")
+                else:
+                    return redirect(url_for('dependson', id=id, prog_name=program))
+
+
         else:
             return render_template('adminpage.html', id=id)
+
+
 
 @app.route('/admin/<int:id>/studentscontrol/<string:dep_name>/<string:prog_name>/<int:level>/',methods=['POST','GET'])
 
@@ -357,6 +373,41 @@ def department_ajax():
         return  jsonify({"update":"failed"})
     return jsonify({"update": "sucess"})
 
+@app.route('/admin/<int:id>/<string:prog_name>/dependson/',methods=['POST','GET'])
+def dependson(id,prog_name):
+    courses = sessionDB.execute("select * from course where program_name = :prog_name",{"prog_name":prog_name}).fetchall()
+    result = sessionDB.execute("select * from course_has_course  inner join course on course_id = course.id  where course_program_name = :prog_name  order by course_id ",{"prog_name":prog_name}).fetchall()
+    if request.method == 'POST':
+        courses = request.form.get('course')
+        courses_depends_on = request.form.get('coursedepends')
+        level1 = courses[-1]
+        level2 = courses_depends_on[-1]
+        print(level1)
+
+        sessionDB.execute("insert into course_has_course (course_id,course_program_level,course_program_name, "
+                              " course_id1,course_program_level1,course_program_name1) "
+                              " values (:course_id, :course_program_level, :course_program_name, :course_id1, "
+                              ":course_program_level1, :course_program_name1)",
+                              {"course_id":courses[:-1],"course_program_level":courses[-1],
+                               "course_program_name":prog_name,"course_id1":courses_depends_on[:-1] ,
+                               "course_program_level1":courses_depends_on[-1],"course_program_name1":prog_name})
+        sessionDB.commit()
+
+    else:
+        return render_template('dependson.html',courses=courses, result = result)
+
+@app.route('/depends',methods = ["POST"])
+def depends():
+    id = request.form['id']
+    id1 = request.form['id1']
+    table = request.form['table']
+    try:
+        sessionDB.execute("DELETE FROM " + table + " WHERE course_id = :id and course_id1 = :id1 ", {"id": id,"id1":id1})
+        sessionDB.commit()
+
+    except:
+        return jsonify({"del": 'failed'})
+    return jsonify({"del": 'sucess'})
 # this is the end of admin
 
 #teacher start form here
@@ -683,6 +734,15 @@ def states():
     what = request.form['what']
     prog = request.form['prog']
     level = request.form['level']
+
+    if what == "term":
+
+        sessionDB.execute("SET SQL_SAFE_UPDATES=0")
+        sessionDB.execute("update states set term = :state",{"state":state})
+        sessionDB.execute("SET SQL_SAFE_UPDATES=1")
+        sessionDB.commit()
+        return
+
 
     print(state)
     print(what)

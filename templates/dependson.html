@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <form action="" method="post">
+                        course:
+                        <div class="form-group">
+                            <select class="form-control" name="course">
+                                {% for course in courses %}
+                                    <option value="{{course.id}}{{course.program_level}}"> {{course.name}} ({{course.id}}) ( level:{{course.program_level}}) </option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hours">course depends:</label>
+                            <select class="form-control" name="coursedepends">
+                                {% for course in courses %}
+                                    <option value="{{course.id}}{{course.program_level}}"> {{course.name}} ({{course.id}}) ( level:{{course.program_level}}) </option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="btn" value="hour">add</button>
+                  </form>
+            </div>
+   
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                 {%if result != []%}
+                    <span style="color: red;">{{alretdb}}</span> 
+                    <div style="height: 350px; overflow: scroll; margin-top: 30px;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    
+                                    <th scope="col">course code</th>
+                                    <th scope="col">level</th>
+                                    <th scope="col">depends on</th>
+                                    
+                                    <th scope="col">level</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                                <!--  code 5ra awii 3ndi fkra bs msh dlw3ti !-->
+                                <tbody>
+                                    <!-- saturday !-->
+                            {% set count = [1] %} 
+                            {% set flag = {'code':result[0][0]} %}
+                            {% for time in result %}
+                            
+                                    {% if flag['code'] != time.course_id %} 
+                                        {% set count = [1] %}
+                                        
+                                    {%endif%}
+                                    {% if flag.update( {'code' : time.course_id} )  %}{%endif%}
+                                    <tr >
+                                        {% if count[0] == 1 %}
+                                            <th>{{time.course_id}}</th>
+                                        {%endif%}
+                                        {% if count[0] > 1 %}
+                                            <th></th>
+                                        {%endif%}
+                                        <th >{{time.course_program_level}}</th>
+                                        <th >{{time.course_id1}}</th>
+                                         <th >{{time.course_program_level1}}</th>
+                                        <th><button type="button" class="btn btn-danger" data-id1="{{time.course_id1}}" data-id="{{time.course_id}}" data-table = "course_has_course" id="del">Delete</button></th>
+                                        {% if count.append(count.pop() + 1) %}{%endif%}
+                                                
+                                    </tr>
+                                    
+                            
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll("#del").forEach(btn =>{
+        btn.onclick =()=> {
+             request = new XMLHttpRequest();
+             request.open('POST','/depends');
+            request.onload=function()
+            {
+                document.location = document.location;
+               
+            }
+            data_send = new FormData();
+            data_send.append('id',btn.dataset.id);
+            data_send.append('id1',btn.dataset.id1);
+            data_send.append('table',btn.dataset.table);
+            request.send(data_send);
+        }
+    });
+    });
+</script>
+</body>
+</html>
