@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            document.querySelector('#form1').style.display ="none"
+            document.querySelector('#form2').style.display ="none"
+            document.querySelector('#form3').style.display ="none"
+            document.querySelector('#table1').style.display ="none"
+            document.querySelector('#table2').style.display ="none"
+            document.querySelector('#table3').style.display ="none"
+            document.querySelector('#table4').style.display ="none"
+            document.querySelector('#register').onclick= function(){
+                var off = document.querySelector('#form1');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+            document.querySelector('#summer').onclick= function(){
+                var off = document.querySelector('#form2');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+            document.querySelector('#drop').onclick= function(){
+                var off = document.querySelector('#form3');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+            document.querySelector('#info').onclick= function(){
+                var off = document.querySelector('#table1');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+            document.querySelector('#mid').onclick= function(){
+                var off = document.querySelector('#table2');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+            document.querySelector('#final').onclick= function(){
+                var off = document.querySelector('#table3');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+            document.querySelector('#schedule').onclick= function(){
+                var off = document.querySelector('#table4');
+                if (off.style.display == "none"){
+                    off.style.display = "block";
+                }
+                else{
+                    off.style.display = "none"
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="register">Subjects Registration</button>
+                <form action="{{url_for('student',id = id)}}" method="post" id="form1">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Credit Hours</th>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for subject in subjects %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{subject.hours}}</td>
+                                <td>{{subject.name}}</td>
+                                <td>{{subject.id}}</td>
+                                {% if subject.optional == 1 %}
+                                    <td>No</td>
+                                {% elif subject.optional == 0 %}
+                                    <td>Yes</td>
+                                {% endif %}
+                                    <td><input type="checkbox" id="toto" name="check" value="{{subject.id}}"></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary" name="btn" value="register">Submit</button>
+                </form>
+            </div>
+             <div class="col">
+                <button type="button" class="btn btn-primary" id="summer">Summer Courses</button>
+                 <span style="color:red;">{{alret}}</span>
+                <form action="{{url_for('student', id = id)}}" method="post" id="form2">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Credit Hours</th>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for sum in summer %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{sum.hours}}</td>
+                                <td>{{sum.name}}</td>
+                                <td>{{sum.course_code}}</td>
+                                <td><input type="checkbox" id="blankCheckbox" name="check2" value="{{sum.course_code}}"></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    P.S. Subjects in the summer don't exceed 6 hours
+                    <br>
+                    <button type="submit" class="btn btn-primary" name="btn" value="summer">Submit</button>
+                </form>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="drop">Drop Out</button>
+                <form action="{{url_for('student',id = id)}}" method="post" id="form3">
+                    <div class="form-group">
+                        <label for="de">Course Code</label>
+                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="code" name="code">
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="btn" value="drop">Submit</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="info">Student Info</button>
+                    <table id="table1" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Level</th>
+                                <th>Department</th>
+                                <th>Credit hours</th>
+                                <th>GPA</th>
+                                <th>Registered Subjects</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item  in result_info  %}
+                            <tr>
+                                
+                                <td>{{item.ID}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.program_level}}</td>
+                                <td>{{item.department_name}}</td>
+                                <td>{{item.hours}}</td>
+                                <td>{{item.gpa}}</td>
+                                <td></td>
+                                
+                            {%endfor%}
+                            </tr>
+                            {% for item1  in studentcourses  %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{item1.course_code}}</td>
+                            {%endfor%}
+                            </tr>
+                                
+                            <!-- adding the table content --->
+                            
+                            
+                        </tbody>
+                    </table>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="mid">Work scores</button>
+                    <table id="table2" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Code</th>
+                                <th>Exam Type</th>
+                                <th>grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for test in score %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{test.exam_course_code}}</td>
+                                <td>{{test.exam_type}}</td>
+                                <td>{{test.total}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="final">Final Scores</button>
+                    <table id="table3" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Code</th>
+                                <th>Final Grade</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in final %}
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{result.exam_course_code}}</td>
+                                <td>{{result.total}}</td>
+                                <td>{{result.grade}}</td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="schedule">Schedule</button>
+                     <div style="height: 350px; overflow: scroll; margin-top: 30px;" id="table4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">day</th>
+                                    <th scope="col">course code</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">type</th>
+                                    <th scope="col">from</th>
+                                    <th scope="col">to</th>
+                                </tr>
+                            </thead>
+                                <!--  code 5ra awii 3ndi fkra bs msh dlw3ti !-->
+                                <tbody>
+                                    <!-- saturday !-->
+                            {% set count = [1] %} 
+                            {% set flag = {'day':result[0][0]} %}
+                            {% for time in result %}
+                            
+                                    {% if flag['day'] != time.weekdays_day %} 
+                                        {% set count = [1] %}
+                                        
+                                    {%endif%}
+                                    {% if flag.update( {'day' : time.weekdays_day} )  %}{%endif%}
+                                    <tr >
+                                        {% if count[0] == 1 %}
+                                            <th>{{time.weekdays_day}}</th>
+                                        {%endif%}
+                                        {% if count[0] > 1 %}
+                                            <th></th>
+                                        {%endif%}
+                                        <th >{{time.course_id}}</th>
+                                        <th >{{time.name}}</th>
+                                        <td data-id="{{time.id}}" data-info="type" data-table = "times">{{time.type}}</td>
+                                        <td data-id="{{time.id}}" data-info="fromm" data-table = "times">{{time.fromm}}</td>
+                                        <td data-id="{{time.id}}" data-info="too" data-table = "times">{{time.too}}</td>
+                                        {% if count.append(count.pop() + 1) %}{%endif%}
+                                                
+                                    </tr>
+                                    
+                            
+                            {%endfor%}
+                            <!-- adding the table content --->
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+       
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+</body>
+</html>

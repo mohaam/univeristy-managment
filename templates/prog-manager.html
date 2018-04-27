@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="{{url_for('static',filename='js/prog-manager.js')}}"></script>
+    <title>programer manager</title>
+  </head>
+  <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('teacher',id=id,name=teachername,prog_name=prog_name,dep_name=dep_name)}}">Home <span class="sr-only">(current)</span></a>
+              </li>
+      
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+
+            </ul>
+
+          </div>
+        </nav>
+        <div class="alert alert-success" role="alert" style="width: 500px; margin: auto; text-align: center;">
+            welcome dr : {{teachername}}
+      </div>
+    <div class="container-fluid">
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-4 col-xs-4 col-sm-4 ">
+                <button type="button" class="btn btn-info" id="times">add courses teachers</button>
+                 <form method="post">
+                    <span style="color: red;"> {{alret}} </span>
+                  <div class="form-group">
+                   courses:
+                    <select class="form-control" name="courses">
+                    
+                    {%for course in courses%}
+                      <option value="{{course.id}}">{{course.name}}</option>
+                    {%endfor%}
+                   
+                    </select>
+                  </div>
+                  <div class="form-group">
+                   teachers:
+                    <select class="form-control" name="teacher">
+                        
+                        {%for teacher in teachers%}
+                          <option value="{{teacher.id}}">{{teacher.name}}</option>
+                        {%endfor%}
+                       
+                    </select>
+                  </div>
+        
+                  <button type="submit" class="btn btn-primary" name="btn" value="teacher">Submit</button>
+                </form>
+            </div>
+             <div class="col-md-2 col-xs-2 col-sm-2 ">
+                 <div>
+                   <table class="table table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">teacher name</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                            {%for teacher in teachers%}
+                            <tr>
+                                <th scope="row">{{teacher.id}}</th>
+                                <td>{{teacher.name}}</td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-xs-6 col-sm-6 ">
+                <div>
+                   <table class="table table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">course name</th>
+                            <th scope="col">course code</th>
+                            <th scope="col">teacher name</th>
+                            <th scope="col">teacher id</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                            {%for item in teacherscourses%}
+                            <tr>
+                                <th scope="row">{{item.name}}</th>
+                                <th scope="row">{{item.course_code}}</th>
+                                <td>{{item[1]}}</td>
+                                <td class="change" data-col="teacher_id" data-table="teachercourses" data-id="{{item[0]}}">{{item.teacher_id}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger"  data-table="teachercourses" data-id="{{item[0]}}" id="del">Delete</button>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-info" id="times">add exam list</button>
+                 <form method="post">
+                     <span style="color: red">{{dbalret}}</span>
+                     <span style="color: red">{{alretexam}}</span>
+                     <span style="color: red">{{alretstudent}}</span>
+                    <div class="form-group">
+                       exam code:
+                        <input type="text" class="form-control" id="exam" placeholder="exam code" name="examcode">
+                    </div>
+                  <div class="form-group">
+                   type:
+                    <select class="form-control" name="type">
+                        <option>midtrem</option>
+                        <option>final</option>
+                        <option>oral</option>
+                        <option>practical</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                   courses:
+                    <select class="form-control" name="course">
+                    {%for course in courses%}
+                      <option value="{{course.id}}">{{course.name}}</option>
+                    {%endfor%}
+                    </select>
+                  </div>
+                    <div class="form-group">
+                       teacher-supervision :
+                        <select class="form-control" name="teacher">
+                        {%for teacher in teachers%}
+                          <option value="{{teacher.id}}">{{teacher.name}}</option>
+                        {%endfor%}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                       full mark:
+                        <input type="text" class="form-control" id="full" placeholder="fullmark" name="full">
+                    </div>
+                    <div class="form-group">
+                       pass mark:
+                        <input type="text" class="form-control" id="pass" placeholder="passmark" name="pass">
+                    </div>
+        
+                  <button type="submit" class="btn btn-primary" name="btn" value="exam">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <div>
+                   <table class="table table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">exam code</th>
+                            <th scope="col">type</th>
+                            <th scope="col">full mark</th>
+                            <th scope="col">pass mark</th>
+                            <th scope="col">course name</th>
+                            <th scope="col">course code</th>
+                            <th scope="col"> supervisor name</th>
+                            <th scope="col">supervisor id</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                            {%for exam in exams_table%}
+                            <tr>
+                                <th scope="row">{{exam.id}}</th>
+                                <td>{{exam.type}}</td>
+                                <td>{{exam.full_mark}}</td>
+                                <td>{{exam.passing_mark}}</td>
+                                <td>{{exam[1]}}</td>
+                                <td>{{exam.course_code}}</td>
+                                <td>{{exam[0]}}</td>
+                                <td class="change" data-col="teacher_id" data-table="exam" data-id="{{exam.id}}">{{exam.teacher_id}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger"  data-table="exam" data-id="{{exam.id}}" id="del">Delete</button>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+
+  </body>
+</html>

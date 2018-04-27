@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+        <style>
+            .overlay
+            {
+                height: inherit;
+                background-color: rgba(0,0,0,.2);
+            }
+            body
+            {
+                height: 100vh;
+                background-image: url("{{url_for('static',filename='imgs/univeristy 2.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+                
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: silver;
+                
+            }
+
+    </style>
     <script>
         document.addEventListener('DOMContentLoaded',function(){
             document.querySelector('#form1').style.visibility ="hidden"
@@ -29,56 +53,104 @@
 
         });
     </script>
+
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+          <a class="navbar-brand" href="">AinShams Univeristy</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ">
+              <li class="nav-item active">
+                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+              </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+      
+            </ul>
+
+          </div>
+    </nav>
+<div class="overlay">
     <div class="container">
+
         <div class="row">
+            
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <button type="button" class="btn btn-primary" id="st">student-control</button>
-                <form action="{{url_for('admin',id = id)}}" method="post" id="form1">
-                    <div class="form-group">
-                        <label for="de">deparment:</label>
-                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="deparment" name="deparment">
-                    </div>
-                    <div class="form-group">
-                        <label for="pr">program:</label>
-                        <input type="text" class="form-control" id="pr" placeholder="program" name="program">
-                    </div>
-                    <div class="form-group">
-                        <label for="le">level:</label>
-                        <input type="text" class="form-control" id="le" placeholder="level" name="level">
-                    </div>
-                    <button type="submit" class="btn btn-primary" name="btn" value="student">Get</button>
-                </form>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <button type="button" class="btn btn-success" id="te">teacher-control</button>
-                <form action="{{url_for('admin',id = id)}}" method="post" id="form2">
-                    <div class="form-group">
-                        <label for="de">deparment:</label>
-                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="deparment" name="deparment">
-                    </div>
-                    <button type="submit" class="btn btn-primary" name="btn" value="teacher">Get</button>
-                </form>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <button type="button" class="btn btn-danger" id="dep">courses-control</button>
-                <form action="{{url_for('admin',id = id)}}" method="post" id="form3">
+                
+               
+                
+                <form action="{{url_for('admin',id = id)}}" method="post" id="form1" class="form">
+                    <span style="color: red">{{notexist}}</span>
+                    <span style="color: red">{{alretst}}</span>
                     
                     <div class="form-group">
                         <label for="de">deparment:</label>
                         <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="deparment" name="deparment">
                     </div>
+                    
+                    <span style="color: red">{{alretst}}</span>
+                    
+                    <div class="form-group">
+                        <label for="pr">program:</label>
+                        <input type="text" class="form-control" id="pr" placeholder="program" name="program">
+                    </div>
+                    <span style="color: red">{{alretst}}</span>
+                    
+                    <div class="form-group">
+                        <label for="le">level:</label>
+                        <input type="text" class="form-control" id="le" placeholder="level" name="level">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" name="btn" value="student">Get</button>
+                </form>
+            </div>
+            
+            
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button" class="btn btn-success" id="te">teacher-control</button>
+                <form action="{{url_for('admin',id = id)}}" method="post" id="form2" class="form">
+                    <span style="color: red">{{alrette}}</span>
+                    <div class="form-group">
+                       
+                        <label for="de">deparment:</label>
+                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="deparment" name="deparment">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" name="btn" value="teacher">Get</button>
+                </form>
+            </div>
+            
+            
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button" class="btn btn-danger" id="dep">courses-control</button>
+                <form action="{{url_for('admin',id = id)}}" method="post" id="form3" class="form">
+                    
+                    <span style="color: red">{{alretco}}</span>
+                    <span style="color: red">{{notexistco}}</span>
+
+                    <div class="form-group">
+                        <label for="de">deparment:</label>
+                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="deparment" name="deparment">
+                    </div>
+                    <span style="color: red">{{alretco}}</span>
+
                     <div class="form-group">
                         <label for="de">program:</label>
                         <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="program" name="program">
                     </div>
+                    
+                    <span style="color: red">{{alretco}}</span>
+
                     <div class="form-group">
                         <label for="de">level:</label>
                         <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="level" name="level">
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" name="btn" value="courses">Get</button>
+                    <button type="submit" class="btn btn-primary btn-block" name="btn" value="courses">Get</button>
                 </form>
             </div>
         </div>
@@ -86,17 +158,22 @@
         <div class=" row">
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <button type="button" class="btn btn-info" id="times">times-control</button>
-                <form action="{{url_for('admin',id = id)}}" method="post" id="form4">
+                <form action="{{url_for('admin',id = id)}}" method="post" id="form4" class="form">
+                    <span style="color: red">{{alretti}}</span>
+                    <span style="color: red">{{notexistti}}</span>
+                    
                     <div class="form-group">
                         <label for="de">program:</label>
                         <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="program" name="program">
                     </div>
+                    
+                    <span style="color: red">{{alretti}}</span>
                     <div class="form-group">
                         <label for="de">level:</label>
                         <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="level" name="level">
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" name="btn" value="times">Get</button>
+                    <button type="submit" class="btn btn-primary btn-block" name="btn" value="times">Get</button>
                 </form>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4">
@@ -108,7 +185,7 @@
             </div>
         </div>
     </div>
-
+</div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
 </body>

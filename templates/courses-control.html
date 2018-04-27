@@ -9,11 +9,43 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('admin',id=id)}}">Home <span class="sr-only">(current)</span></a>
+              </li>
+      
+                <li class="nav-item active">
+                    <a class="nav-link" href="">department is {{dep_name}} <span class="sr-only">(current)</span></a>
+                </li>
+                    <li class="nav-item active">
+                    <a class="nav-link" href="">program is {{prog_name}} <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="">level is {{level}} <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+          </div>
+        </nav>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-success" role="alert" style="width: 500px; margin: auto; text-align: center;">
+                        to change the calssify put one to optional put zero to mandotary
+                    </div>
                     {%if result != []%}
-                    <div>
+                    <div style="margin-top: 30px;">
+
                         <table class=" table result ">
                             <thead class="thead-dark">
                                 <tr class="table-success">
@@ -23,6 +55,7 @@
                                     <th scope="col">passmark</th>
                                     <th scope="col">hours</th>
                                     <th scope="col">classify</th>
+                                    <th scope="col">term</th>
                                     <th scope="col">Delete</th>
                                 </tr>
                             </thead>
@@ -30,7 +63,7 @@
                                 <tbody>
                                     <tr class="table-success">
                                         <td data-id="{{courses.id}}" data-info="name" data-table = "course">{{courses.name}} </td>
-                                        <td data-id="{{courses.id}}" data-info="code" data-table = "course">{{courses.id}} </td>
+                                        <td data-id="{{courses.id}}" data-info="id" data-table = "course">{{courses.id}} </td>
                                         <td data-id="{{courses.id}}" data-info="full_mark" data-table = "course">{{courses.full_mark}}</td>
                                         <td data-id="{{courses.id}}" data-info="pass_mark" data-table = "course">{{courses.pass_mark}}</td>
                                         <td data-id="{{courses.id}}" data-info="hours" data-table = "course">{{courses.hours}}</td>
@@ -40,6 +73,11 @@
                                             {%else%}
                                                 mandotary
                                             {%endif%}
+                                        </td>
+                                        <td data-id="{{courses.id}}" data-info="term" data-table = "course">
+                                            {{courses.term }}
+                               
+                                            
                                         </td>
                 
                                         <th ><button type="button" class="btn btn-danger" data-id="{{courses.id}}" data-table = "course" id="del">Delete</button>
@@ -55,6 +93,7 @@
             </div>
                 <div class="row">
                     <div class="col-md-4">
+                    <span style="color: red;">{{alretdb}}</span>                              
                             <h2 id="s">Add Course:</h2>
                             <div id="input-control" style="height:50%;overflow:scroll;">
                                 <form action="" method="post">
@@ -83,6 +122,12 @@
                                         <label for="hours">hours:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="hours" placeholder="hours" name="hours">
+                                    </div>
+                                    <span style="color: red;">{{alret}}</span>
+                                    <div class="form-group">
+                                        <label for="term">term:</label>
+                                        <span style="color: red;">{{alret}}</span>
+                                        <input type="text" class="form-control" id="term" placeholder="term" name="term">
                                     </div>
                                     
                                     <span style="color: red;">{{alret}}</span>

@@ -13,10 +13,29 @@
     <title>Hello, world!</title>
   </head>
   <body>
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" href="">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('admin',id=id)}}">Home <span class="sr-only">(current)</span></a>
+              </li>
+    
+                <li class="nav-item active">
+                    <a class="nav-link " href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+          </div>
+        </nav>
       <div class="container">
           <div class="row">
               <div class="col-md-4 col-sm-4 col-xs-4">
-                  <div>
+                  <div style="margin-top: 30px;">
                       <table class="table">
                           <thead class="thead-dark">
                             <tr>
@@ -37,11 +56,13 @@
               </div>
               <div class="col-md-4 col-sm-4 col-xs-4" ></div>
                 <div class="col-md-4 col-sm-4 col-xs-4">
-                  <div>
+                  <div style="margin-top: 30px;">
                       <table class="table">
                           <thead class="thead-dark">
                             <tr>
-                              <th scope="col">teacher name</th>
+                                <th scope="col">teacher name</th>
+                                <th scope="col">his department</th>
+
                               <th scope="col">id</th>
                             </tr>
                           </thead>
@@ -49,6 +70,7 @@
                         {%for teacher in result1%}
                             <tr>
                               <td>{{teacher.name}}</td>
+                                <td>{{teacher.department_name}}</td>
                               <td>{{teacher.id}}</td>
                             </tr>
                         {%endfor%}
@@ -61,6 +83,7 @@
               <div class="col-md-4 col-sm-4 col-xs-4"></div>
               <div class="col-md-4 col-sm-4 col-xs-4">
                   <form action="" method="post">
+                      <span style="color: red">{{alret}}</span>
                         <div class="form-group">
                             <label for="dep">department name</label>
                             <input type="text" class="form-control" id="dep" aria-describedby="emailHelp" placeholder="Enter department name "  name="depname">

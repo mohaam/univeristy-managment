@@ -7,18 +7,41 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
   
 
-    <title>Hello, world!</title>
+    <title>department managment</title>
   </head>
   <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('teacher',id=id,name=teachername,prog_name=prog_name,dep_name=dep_name)}}">Home <span class="sr-only">(current)</span></a>
+              </li>
+      
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="">welcome dr: {{teachername}} <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+          </div>
+        </nav>
       <div class="container">
           <div class="row">
               <div class="col-md-4 col-sm-4 col-xs-4">
                   <button type="button" class="btn btn-primary" id="program">add-program</button>
                   <div id="form1">
-                    
+                    <span style="color: red"> {{alret}} </span>
                     <form action="" method="post" >
                         <div class="form-group">
                             <label for="pr">program:</label>
@@ -50,6 +73,7 @@
                                 <option value="4"> 4 </option>
                             </select>
                         </div>
+                      <span style="color: red;">{{alrethour}}</span>
                         <div class="form-group">
                             <label for="hours">hours:</label>
                             <input type="text" class="form-control" id="hours" placeholder="hours" name="hours">

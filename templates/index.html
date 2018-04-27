@@ -4,40 +4,91 @@
     <head>
         <link rel="stylesheet" href="../static/css/bootstrap.min.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>univeristy</title>
+        <style>
+            .overlay
+            {
+                height: inherit;
+                background-color: rgba(0,0,0,.5);
+            }
+            body
+            {
+                height: 100vh;
+                background-image: url('../static/imgs/univeristy.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+                
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                margin-top: 50%;
+                color: cornflowerblue;
+                background-color: rgba(0,0,0,.5);
+            }
+            .bg-light
+            {
+                background-color: blueviolet;
+            }
+
+        </style>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xm-4">
-                </div>
-                
-                <div class="col-md-4 col-sm-4 col-xm-4">
-                   
-                        <form  action="{{url_for('index')}}" method="post">
-                             <div class="form-group">
-                                 
-                                <label for="exampleInputEmail1">ID:</label>
-                                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your id" name="id">
-    
-                              </div>
-                              <div class="form-group">
-                                <label for="exampleFormControlSelect2">Your Job:</label>
-                                <select multiple class="form-control" id="exampleFormControlSelect2" name="job">
-                                  <option>teacher</option>
-                                  <option>student</option>
-                                  <option>admin</option>
-                                </select>
-                              </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    
-                </div>
-                
-                <div class="col-md-4 col-sm-4 col-xm-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+          <a class="navbar-brand" href="">AinShams Univeristy</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+              </li>
+      
+            </ul>
+
+          </div>
+        </nav>
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xm-4">
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xm-4">
+
+                            <form  action="{{url_for('index')}}" method="post" class="form">
+                                <span style="color: red">{{alret}}</span>
+                                 <div class="form-group">
+
+                                    <label for="id">secret code:</label>
+                                    <input type="password" class="form-control" id="id" aria-describedby="emailHelp" placeholder="Enter your secret code" name="id">
+
+                                  </div>
+                                    <span style="color: red">{{alret}}</span>
+
+                                  <div class="form-group">
+                                    <label for="jb">Your Job:</label>
+                                    <select  class="form-control" id="jb" name="job">
+                                      <option>teacher</option>
+                                      <option>student</option>
+                                      <option>admin</option>
+                                    </select>
+                                  </div>
+                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            </form>
+
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xm-4">
+                    </div>
                 </div>
             </div>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="../static/js/bootstrap.min.js"></script>
         </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="../static/js/bootstrap.min.js"></script>
     </body>
 </html>

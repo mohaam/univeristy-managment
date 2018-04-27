@@ -12,6 +12,32 @@
     <title>Hello, world!</title>
   </head>
   <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('teacher',id=id,name=name,prog_name=prog_name,dep_name=dep_name)}}">Home <span class="sr-only">(current)</span></a>
+              </li>
+      
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+          </div>
+        </nav>
+      
+      <div class="alert alert-success" role="alert" style="width: 500px; margin: auto; text-align: center;">
+            welcome dr : {{name}}
+      </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-xs-4">
@@ -20,6 +46,7 @@
             </div>
 
             <div class="col-md-8 col-xs-4">
+                {% if result != []%}
                 <div>
                    <table class="table table-striped">
                       <thead>
@@ -62,6 +89,7 @@
                       </tbody>
                     </table>
                 </div>
+                {%endif%}
             </div>
         </div>
         
@@ -69,6 +97,7 @@
             <div class="col-md-4 col-xs-4">
                  <button type="button" class="btn btn-info">put marks</button>
                 <form action="" method="post">
+                    <span style="color: red"> {{alretdb}} </span>
                     <span style="color: red"> {{alret}} </span>
                       <div class="form-group">
                          
@@ -139,11 +168,11 @@
         </div>
         <div class="row" style="margin-top: 10%;">
             <div class="col-md-4">
-                {%if prog_manage[0] != None %}
-                    <a href="#" class="badge badge-info">Mangement-panel</a>
+                {%if prog_manage[0] != '-' %}
+                    <a href="{{url_for('prog_manager',id=id,prog_name=prog_manage[0],teachername=name,dep_name=dep_name)}}" class="badge badge-info">Mangement-panel</a>
                 {%endif%}
                 {%if dep_manage != None  %}
-                <a href="{{url_for('dep_manager',id=id,dep_name=dep_name)}}" class="badge badge-info">Mangement-panel</a>
+                <a href="{{url_for('dep_manager',teachername=name,prog_name=prog_name,dep_name=dep_name,id=id)}}" class="badge badge-info">Mangement-panel</a>
               
                 {%endif%}
             </div>

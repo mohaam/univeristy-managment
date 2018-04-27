@@ -9,12 +9,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('admin',id=id)}}">Home <span class="sr-only">(current)</span></a>
+              </li>
+    
+                <li class="nav-item active">
+                    <a class="nav-link" href="">program is {{prog_name}} <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="">level is {{level}} <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+          </div>
+        </nav>
         <div class="container">
             
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     {%if result != []%}
-                    <div style="height: 350px; overflow: scroll;">
+                    <span style="color: red;">{{alretdb}}</span> 
+                    <div style="height: 350px; overflow: scroll; margin-top: 30px;">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -24,6 +50,7 @@
                                     <th scope="col">type</th>
                                     <th scope="col">from</th>
                                     <th scope="col">to</th>
+                                    <th scope="col">place</th>
                                     <th scope="col">Delete</th>
                                 </tr>
                             </thead>
@@ -51,6 +78,7 @@
                                         <td data-id="{{time.id}}" data-info="type" data-table = "times">{{time.type}}</td>
                                         <td data-id="{{time.id}}" data-info="fromm" data-table = "times">{{time.fromm}}</td>
                                         <td data-id="{{time.id}}" data-info="too" data-table = "times">{{time.too}}</td>
+                                        <td data-id="{{time.id}}" data-info="place" data-table = "times">{{time.place}}</td>
                                         <th><button type="button" class="btn btn-danger" data-id="{{time.id}}" data-table = "times" id="del">Delete</button></th>
                                         {% if count.append(count.pop() + 1) %}{%endif%}
                                                 
