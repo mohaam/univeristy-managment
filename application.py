@@ -2,7 +2,7 @@ from flask import Flask ,request,render_template,redirect,url_for,flash,session,
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
-engine = create_engine('mysql+mysqlconnector://root:@localhost:3306/sis')
+engine = create_engine('mysql+mysqlconnector://root:test@localhost:3306/sis')
 sessionDB = Session(engine)
 
 
@@ -676,7 +676,7 @@ def logout():
 
 #end of program manager
 
-@app.route('/states',methods=['POST'])
+@app.route('/states', methods=['POST'])
 def states():
 
     state = int(request.form['state'])
@@ -1075,4 +1075,4 @@ def QP(course_code, id):
 if __name__ == '__main__':
     app.secret_key = 'super_'
     app.debug = True
-    app.run(host = '0.0.0.0',port=5000)
+    app.run(host='0.0.0.0', port=5000)
