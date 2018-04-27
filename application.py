@@ -697,7 +697,7 @@ def states():
 @app.route('/student/<int:id>/', methods=['POST', 'GET'])
 def student(id):
     if session['student_id'] == id:
-        get_term = sessionDB.execute("select term from states where program_level = 1")
+        get_term = sessionDB.execute("select term from states where program_level = 1").fetchone()
         term = int(get_term.term)
 
 
