@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03d10fe-9a3c-4d8f-8fdb-9baa2ca1b015" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/essra mohamed.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/essra mohamed.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/studentpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/studentpage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/univeristy .mwb" beforeDir="false" afterPath="$PROJECT_DIR$/univeristy .mwb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,14 +19,10 @@
       <file leaf-file-name="application.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-13204">
-              <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
+            <state relative-caret-position="2112">
+              <caret line="783" column="60" selection-start-line="783" selection-start-column="60" selection-end-line="783" selection-end-column="60" />
               <folding>
                 <element signature="e#0#87#0" expanded="true" />
-                <element signature="e#32052#38264#0" />
-                <element signature="e#38289#38673#0" />
-                <element signature="e#38693#39596#0" />
-                <element signature="e#39627#40640#0" />
               </folding>
             </state>
           </provider>
@@ -228,7 +224,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -238,10 +234,6 @@
         <state>
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>
@@ -268,10 +260,6 @@
         <state>
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>
@@ -299,10 +287,6 @@
           <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>
@@ -330,10 +314,6 @@
           <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>
@@ -361,10 +341,6 @@
           <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>
@@ -398,10 +374,6 @@
         <state>
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>
@@ -467,14 +439,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13204">
-          <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
+        <state relative-caret-position="2112">
+          <caret line="783" column="60" selection-start-line="783" selection-start-column="60" selection-end-line="783" selection-end-column="60" />
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <element signature="e#32052#38264#0" />
-            <element signature="e#38289#38673#0" />
-            <element signature="e#38693#39596#0" />
-            <element signature="e#39627#40640#0" />
           </folding>
         </state>
       </provider>

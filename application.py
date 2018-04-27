@@ -655,7 +655,7 @@ def program_manager_ajax():
         return jsonify({"edit": 1})
     else:
         try:
-            sessionDB.execute("DELETE FROM "+table+" WHERE ID = :id",{"id":id})
+            sessionDB.execute("DELETE FROM "+table+" WHERE ID = :id", {"id":id})
             sessionDB.commit()
         except:
             return jsonify({"delete": 0})
@@ -697,10 +697,9 @@ def states():
 @app.route('/student/<int:id>/', methods=['POST', 'GET'])
 def student(id):
     if session['student_id'] == id:
-        # TODO: Activate the commented code when data is entered from admin, term = 2 is just for testing
-        # get_term = sessionDB.execute("select term from states where program_level = 1")
-        # term = int(get_term.term)
-        term = 2
+        get_term = sessionDB.execute("select term from states where program_level = 1")
+        term = int(get_term.term)
+
 
         result_score = sessionDB.execute("select exam_course_code, exam_type, sum(student_mark) as total from "
                                          "studentexam where student_ID = :id group by exam_course_code, exam_type",
@@ -747,8 +746,8 @@ def student(id):
             "and sis.times.course_program_level = :level ORDER BY sis.times.weekdays_index ",
             {"prog_name": program[0], "level": student_level}).fetchall()
         # TODO: make the buttons go voom
-        # states = sessionDB.execute("select * from states where program_level = :student_level and "
-                                   # "program_name = :program",{"student_level":student_level,"program":program[0]}).fetchone()
+        states = sessionDB.execute("select * from states where program_level = :student_level and "
+                                   "program_name = :program",{"student_level":student_level,"program":program[0]}).fetchone()
 
         if request.method == 'POST':
             who = request.form['btn']
@@ -759,12 +758,10 @@ def student(id):
                     for element in value:
                         # default value for pass equal zero to facilitate giving_f() funtion
                         sessionDB.execute("insert into studentcourses (student_ID, course_code, pass) "
-                                          "values (:id, :code, NULL)", {"id": id, "code": int(element)})
+                                          "values (:id, :code, NULL)", {"id": id, "code": element})
                     sessionDB.commit()
                     return render_template('thanks.html')
                 else:
-                    # TODO: message flashing
-                    flash("Tezak kar3a")
                     return render_template(url_for('student', id=id))
             if who == 'summer':
                 value = request.form.getlist('check2')
@@ -772,27 +769,28 @@ def student(id):
                     test = 0
                     for element in value:
                         temp = sessionDB.execute("select hours from course where id=:code",
-                                                 {"code": int(element)}).fetchone()
+                                                 {"code": element}).fetchone()
                         test += int(temp.hours)
                     if test <= 6:
                         for element in value:
                             sessionDB.execute("update studentcourses set summer = 1 where student_ID = :id and "
-                                              "course_code = :code", {"id": id, "code": int(element)})
+                                              "course_code = :code", {"id": id, "code": element})
 
                         sessionDB.commit()
                         return render_template('thanks.html')
                     else:
-                        # TODO: message flashing Or pumping the user to input data
                         return render_template('studentpage.html', subjects=result_subject_test, summer=result_summer,
-                                               final=result_final, score=result_score, id=id, alret="* 6 hours only")
+                                               final=result_final, score=result_score, id=id, alret="* 6 hours only",
+                                               states=states)
                 else:
                     return render_template('studentpage.html', subjects=result_subject_test, summer=result_summer,
-                                           final=result_final, score=result_score, id=id, alret="* Choose subjects")
+                                           final=result_final, score=result_score, id=id, alret="* Choose subjects",
+                                           states=states)
             if who == 'drop':
                 value = request.form['code']
                 if value:
                     exist = sessionDB.execute("select course_code from studentcourses where student_ID=:id and "
-                                              "course_code=:value",{"id": id, "value": value}).fetchone()
+                                              "course_code=:value", {"id": id, "value": value}).fetchone()
                     if exist:
                         sessionDB.execute("delete from studentcourses where student_ID=:id and course_code=:value",
                                           {"id": id, "value": value})
@@ -801,14 +799,12 @@ def student(id):
                     else:
                         return render_template('fail.html')
                 else:
-                    # TODO: message flashing Or pumping the user to input data
-                    flash("Tezak kar3a")
                     return redirect(url_for('student', id=id))
         else:
             # add result info to the code
             return render_template('studentpage.html', subjects=result_subject_test, summer=result_summer,
-                                   final=result_final, score=result_score, id=id,result_info=result_info,
-                                   studentcourses=studentcourses,result=result,states=states)
+                                   final=result_final, score=result_score, id=id, result_info=result_info,
+                                   studentcourses=studentcourses, result=result, states=states)
 
 
 def subject_calc(result_subjects, term, student_level, id):
@@ -828,13 +824,13 @@ def subject_calc(result_subjects, term, student_level, id):
                                           {"id": id}).fetchall()
         # We got a list of available subjects
         for subject in test_subjects:
-            temp = int(subject.course_id1)
-            main_subject.append(int(subject.course_id))
+            temp = subject.course_id1
+            main_subject.append(subject.course_id)
             dependent_subjects.append(temp)
             if check_passage:
                 for subject1 in check_passage:
-                    if int(subject1.course_code) in dependent_subjects:
-                        main_subject.remove(int(subject.course_id))
+                    if subject1.course_code in dependent_subjects:
+                        main_subject.remove(subject.course_id)
 
         for subject in result_subjects:
             if subject.id in main_subject:
@@ -852,7 +848,7 @@ def subject_calc(result_subjects, term, student_level, id):
                                      {"level": student_level + 1}).fetchall()
 
             for subject in temp:
-                added_subject.append(int(subject.course_id))
+                added_subject.append(subject.course_id)
                 hours += int(subject.hours)
                 if hours >= 12:
                     break
@@ -877,17 +873,17 @@ def hours_calc(result_final, id):
     for subject in result_final:
         try:
             temp = sessionDB.execute("select pass_mark, hours from course where id=:id",
-                                 {"id": int(subject.exam_course_code)}).fetchone()
+                                 {"id": subject.exam_course_code}).fetchone()
         except:
             pass
         if subject.total >= int(temp.pass_mark):
-            grade_calc(int(subject.total), int(temp.hours), int(subject.exam_course_code), id)  # This function calculates grade Type
+            grade_calc(int(subject.total), int(temp.hours), subject.exam_course_code, id)  # This function calculates grade Type
             sessionDB.execute("update studentcourses set pass = 1 where student_ID=:id and course_code=:code",
-                              {"id": id, "code": int(subject.exam_course_code)})
+                              {"id": id, "code": subject.exam_course_code})
             hours_added += int(temp.hours)
         else:
             sessionDB.execute("update studentcourses set pass = 0 where student_ID=:id and course_code=:code",
-                              {"id": id, "code": int(subject.exam_course_code)})
+                              {"id": id, "code": subject.exam_course_code})
     sessionDB.commit()
     cur_hours = sessionDB.execute("select hours from student where ID=:id", {"id": id}).fetchone()
     if cur_hours:
@@ -911,7 +907,7 @@ def hours_calc(result_final, id):
     return new_hours
 
 
-def grade_calc(grade, hours, course_code,id):
+def grade_calc(grade, hours, course_code, id):
     if hours == 1:
         percentage = (grade * 100)/50
         if 60 <= percentage < 65:
@@ -922,19 +918,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     elif hours == 2:
         percentage = (grade * 100)/100
         if 60 <= percentage < 65:
@@ -945,19 +941,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     elif hours == 3:
         percentage = (grade * 100)/150
         if 60 <= percentage < 65:
@@ -968,19 +964,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     elif hours == 4: # Check if there is 4 credit hours subjects if not remove this portion of the code
         percentage = (grade * 100) / 200
         if 60 <= percentage < 65:
@@ -991,19 +987,19 @@ def grade_calc(grade, hours, course_code,id):
                               {"id": id, "code": course_code})
         elif 70 <= percentage < 75:
             sessionDB.execute("update studentcourses set grade='C+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 75 <= percentage < 80:
             sessionDB.execute("update studentcourses set grade='B' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 80 <= percentage < 85:
             sessionDB.execute("update studentcourses set grade='B+' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif 85 <= percentage < 90:
             sessionDB.execute("update studentcourses set grade='A-' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
         elif percentage >= 90:
             sessionDB.execute("update studentcourses set grade='A' where student_ID=:id and course_code=:code",
-                              {"id": id, "code":course_code})
+                              {"id": id, "code": course_code})
     sessionDB.commit()
 
 
@@ -1012,7 +1008,7 @@ def giving_f(id):
                                {"id": id}).fetchall()
     for result in results:
         sessionDB.execute("update studentcourses set grade='F' where student_ID=:id and course_code=:code",
-                          {"id": id, "code": int(result.course_code)})
+                          {"id": id, "code": result.course_code})
     sessionDB.commit()
 
 
@@ -1029,7 +1025,7 @@ def GPA(id):
     qp = 0.0
     for result in results:
         hours += int(result.hours)
-        qp += QP(int(result.course_code), id)
+        qp += QP(result.course_code, id)
     # This code snippet add cumulative QP to the student
     cur_qp = sessionDB.execute("select qp from student where ID=:id", {"id": id}).fetchone()
     new_qp = 0
