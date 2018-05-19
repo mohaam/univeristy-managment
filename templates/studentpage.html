@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
     <style>
       p{ font-size: 18px;
                font-family: Tahoma, serif;
@@ -106,26 +107,32 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
             document.querySelector('#table2').style.visibility ="hidden";
             document.querySelector('#table3').style.visibility ="hidden";
             document.querySelector('#table4').style.visibility ="hidden";
+
+
             
             states = document.querySelector('#states');
             
             console.log(states.dataset.subject)
             document.querySelector('#register').onclick= function(){
                 var off = document.querySelector('#form1');
+
                 if (window.getComputedStyle(off,null).visibility == "hidden" && states.dataset.subject == 1){
                     off.style.visibility = "visible";
                 }
                 else{
                     off.style.visibility = "hidden";
+
                 }
             }
             document.querySelector('#summer').onclick= function(){
                 var off = document.querySelector('#form2');
+
                 if (window.getComputedStyle(off,null).visibility == "hidden"&& states.dataset.summer == 1){
                     off.style.visibility = "visible";
                 }
                 else{
                     off.style.visibility = "hidden";
+
                 }
             }
             document.querySelector('#drop').onclick= function(){
@@ -135,24 +142,29 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                 }
                 else{
                    off.style.visibility = "hidden";
+
                 }
             }
             document.querySelector('#info').onclick= function(){
                 var off = document.querySelector('#table1');
+
                 if (window.getComputedStyle(off,null).visibility == "hidden"){
                     off.style.visibility = "visible";
                 }
                 else{
                     off.style.visibility = "hidden";
+
                 }
             }
             document.querySelector('#mid').onclick= function(){
                 var off = document.querySelector('#table2');
+
                 if (window.getComputedStyle(off,null).visibility == "hidden" && states.dataset.work == 1){
                    off.style.visibility = "visible";
                 }
                 else{
                    off.style.visibility = "hidden";
+
                 }
             }
             document.querySelector('#final').onclick= function(){
@@ -162,6 +174,7 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                 }
                 else{
                     off.style.visibility = "hidden";
+
                 }
             }
             document.querySelector('#schedule').onclick= function(){
@@ -171,13 +184,11 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                 }
                 else{
                     off.style.visibility = "hidden";
+
                 }
             }
         });
     </script>
-
-
-
 
 
 
@@ -211,11 +222,13 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                                 <th  class="y">Course Code</th>
                                 <th  class="y">Mandatory</th>
                                <th  class="y"></th>
+
                             </tr>
                         </thead>
                         <tbody>
                         {% for subject in subjects %}
-                           <tr class="table-light">
+
+                            <tr>
                                 <th scope="row">{{loop.index}}</th>
                                 <td>{{subject.hours}}</td>
                                 <td>{{subject.name}}</td>
@@ -248,11 +261,12 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                                 <th class="y">Course Name</th>
                                 <th class="y">Course Code</th>
                                  <th class="y"></th>
-                            </tr>
+                      </tr>
                         </thead>
                         <tbody>
                         {% for sum in summer %}
                              <tr class="table-light">
+
                                 <th scope="row">{{loop.index}}</th>
                                 <td>{{sum.hours}}</td>
                                 <td>{{sum.name}}</td>
@@ -279,6 +293,7 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                         <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="code" name="code">
                     </div>
 
+
                     <button type="submit" class="button" name="btn" value="drop">Submit</button>
                 </form>
 
@@ -303,11 +318,13 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                                 <th class="y">Credit hours</th>
                                 <th class="y">GPA</th>
                                 <th class="y">Registered Subjects</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             {% for item  in result_info  %}
                            <tr class="table-light">
+
                                 
                                 <td>{{item.ID}}</td>
                                 <td>{{item.name}}</td>
@@ -322,6 +339,7 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                             </tr>
                             {% for item1  in studentcourses[1:]  %}
                            <tr class="table-light">
+c
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -350,11 +368,13 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                                 <th class="y">Course Code</th>
                                 <th class="y">Exam Type</th>
                                 <th class="y">Grade</th>
+
                             </tr>
                         </thead>
                         <tbody>
                         {% for test in score %}
                            <tr class="table-light">
+
                                 <th scope="row">{{loop.index}}</th>
                                 <td>{{test.exam_course_code}}</td>
                                 <td>{{test.exam_type}}</td>
@@ -375,11 +395,14 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                                 <th class="y">Course Code</th>
                                 <th class="y">Final Grade</th>
                                 <th class="y">Grade</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             {% for result in final %}
+
                              <tr class="table-light">
+
                                 <th scope="row">{{loop.index}}</th>
                                 <td>{{result.exam_course_code}}</td>
                                 <td>{{result.total}}</td>
@@ -407,7 +430,7 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                                     <th scope="col">Type</th>
                                     <th scope="col">From</th>
                                     <th scope="col">To</th>
-                                </tr>
+
                             </thead>
                                 <!--  code 5ra awii 3ndi fkra bs msh dlw3ti !-->
                                 <tbody>
@@ -444,14 +467,14 @@ li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
                     </table>
                 {%endif%}
                 </div>
+
             </div>
         
         </div>
        
     </div>
     </div>
-  
-    
+
     <div id="states" data-summer={{states.summer}} data-finall={{states.finall}} data-work={{states.work}} data-dropp={{states.dropp}} data-subject={{states.subject}} style="display: none;"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
