@@ -9,27 +9,159 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <script src="{{url_for('static',filename='js/teacherpage1.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
-    <title>Hello, world!</title>
+    <title>Lunix</title>
+       <style>
+       .button1 {
+    background-color:#e6b0aa;
+    border-radius:10px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin:5px 40px;
+    cursor: pointer;
+    }
+        table.y{overflow-hidden;}
+th.y{dispaly:block;color:#333;text-align:center;padding:14px 16px;text-decoration:none;background-color:#e6b0aa;
+font-size:17px;
+}
+
+
+    p.x{color:#E0FFFF;}
+     .button1:hover { background-color: #D8959D;}
+
+
+         a:link{text-decoration:none;color:#E0FFFF;font-size:18px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:18px;}
+a:hover{font-size:18px;color:gray;}
+          ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:65px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+
+li a {display: block; color: white; text-align: center;  padding: 14px 16px; float: left;
+    text-decoration: none;font-family: Tahoma, serif; font-size:18px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);}
+.active { background-color:#e6b0aa;}
+
+
+
+
+            .overlay
+            {
+                height:1040px;
+                background-color: rgba(0,0,0,.5);
+
+
+            }
+             .ov
+            {
+                height: 55px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 20px;
+
+            }
+            body
+            {
+                height: 130vh;
+                background-image: url("{{url_for('static',filename='imgs/es.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: #ABDDE5;
+
+
+
+            }
+            p{ font-size: 25px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+            .tabl
+            {
+                border: 1px solid black;
+                padding: 12px;
+                border-radius: 10px;
+                background-color: rgba(0,0,0,.5);
+
+            }
+            /* width */
+        ::-webkit-scrollbar {
+          width: 10px; }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0); }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #888; }
+
+        ::-webkit-scrollbar-corner {
+          background: rgba(0, 0, 0, 0); }
+
+    </style>
   </head>
   <body>
+        <div class="overlay">
+        <ul>
+         <li><a  href="#" class="active" >Home</a></li>
+             <li>
+                {%if prog_manage[0] != '-' %}
+                    <a href="{{url_for('prog_manager',id=id,prog_name=prog_manage[0],teachername=name,dep_name=dep_name)}}" >Mangement-Panel</a>
+                {%endif%}
+                {%if dep_manage != None  %}
+                <a href="{{url_for('dep_manager',teachername=name,prog_name=prog_name,dep_name=dep_name,id=id)}}" >Mangement-Panel</a>
+
+                {%endif%}
+            </li>
+
+            <li><a  href="{{url_for('logout')}}">Logout</a></li>
+
+        </ul>
+      
+
+            <p align="center" class="x">  Welcome Dr : {{name}}</p>
+
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-xs-4">
-                <button type="button" class="btn btn-info">lecture of courses</button>
 
+                <div class="ov">  <p class="x">Times Table</p> </div>
             </div>
 
             <div class="col-md-8 col-xs-4">
-                <div>
-                   <table class="table table-striped">
-                      <thead>
+                {% if result != []%}
+
+                 <div style="margin-top: 10px;  overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
                         <tr>
-                        <th scope="col">day</th>
-                          <th scope="col">course code</th>
-                          <th scope="col">course name</th>
-                          <th scope="col">from</th>
-                            <th scope="col">to</th>
-                            <th scope="col">place</th>
+                        <th scope="col"  class="y">Day</th>
+                          <th scope="col"  class="y">Course Code</th>
+                          <th scope="col"  class="y">Course Name</th>
+                          <th scope="col"  class="y">From</th>
+                            <th scope="col" class="y">To</th>
+                            <th scope="col"  class="y">Place</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -42,7 +174,7 @@
                                         
                                     {%endif%}
                                     {% if flag.update( {'day' : time.weekdays_day} )  %}{%endif%}
-                                    <tr >
+                                    <tr class="table-light">
                                         {% if count[0] == 1 %}
                                             <th>{{time.weekdays_day}}</th>
                                         {%endif%}
@@ -62,26 +194,29 @@
                       </tbody>
                     </table>
                 </div>
+                {%endif%}
             </div>
         </div>
         
         <div class="row">
             <div class="col-md-4 col-xs-4">
-                 <button type="button" class="btn btn-info">put marks</button>
-                <form action="" method="post">
+              <div class="ov"> <p class="x" >Put Marks</p></div><br>
+                <form action="" method="post" class="form" style="height:260px;">
+                    <span style="color: red"> {{alretdb}} </span>
                     <span style="color: red"> {{alret}} </span>
+
                       <div class="form-group">
                          
-                        <label for="coursecode">course code</label>
-                        <input type="text" class="form-control" id="examecode" placeholder="coursecode" name="coursecode">
+                        <label for="coursecode">Course Code</label>
+                        <input type="text" class="form-control" id="examecode" placeholder="CourseCode" name="coursecode">
                       </div>
                         <span style="color: red"> {{alret}} </span>
                         <div class="form-group">
                          
-                        <label for="type">type</label>
-                        <input type="text" class="form-control" id="type" placeholder="type" name="type">
+                        <label for="type">Type</label>
+                        <input type="text" class="form-control" id="type" placeholder="Type" name="type">
                       </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="button1">Submit</button>
                 </form>
             </div>
             <div class="col-md-8">
@@ -92,10 +227,10 @@
                           <thead>
                             <tr>
                               
-                                <th scope="col">coursecode</th>
+                                <th scope="col">CourseCode</th>
                               <th scope="col">type</th>
-                              <th scope="col">full mark</th>
-                              <th scope="col">pass mark</th>
+                              <th scope="col">Full Mark</th>
+                              <th scope="col">Pass Mark</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -118,9 +253,9 @@
                         <table class="table table-hover">
                           <thead>
                             <tr>
-                              <th scope="col">id</th>
-                              <th scope="col">name</th>
-                              <th scope="col">mark</th>
+                              <th scope="col">Id</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Mark</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -137,20 +272,10 @@
                 {%endif%}
             </div>
         </div>
-        <div class="row" style="margin-top: 10%;">
-            <div class="col-md-4">
-                {%if prog_manage[0] != None %}
-                    <a href="#" class="badge badge-info">Mangement-panel</a>
-                {%endif%}
-                {%if dep_manage != None  %}
-                <a href="{{url_for('dep_manager',id=id,dep_name=dep_name)}}" class="badge badge-info">Mangement-panel</a>
-              
-                {%endif%}
-            </div>
-        </div>
+
        
     </div>
-
+        </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

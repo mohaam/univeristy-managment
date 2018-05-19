@@ -3,37 +3,213 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
         <script src="{{url_for('static',filename='js/student-control.js')}}"></script>
         <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+          .button1 {
+    background-color:#e6b0aa;
+    border-radius:10px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin:5px 90px;
+    cursor: pointer;
+    }
+        table.y{overflow-hidden;}
+th.y{dispaly:block;color:#333;text-align:center;padding:14px 16px;text-decoration:none;background-color:#e6b0aa;
+font-size: 18px;
+}
+         .button {
+    background-color:#4CAF50;
+    border-radius:5px;
+    border:#e6b0aa;
+    color:white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin:2px 2px;
+    cursor: pointer;
+    }
+    .button2 {
+    background-color:#e6b0aa;
+    border-radius:5px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 0px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin:0px 30px;
+    cursor: pointer;
+    }
+    p.x{color:#E0FFFF;}
+     .button1:hover { background-color: #D8959D;}
+     .button2:hover { background-color: #D8959D;}
+.button:hover { color:#333;}
+         a:link{text-decoration:none;color:#E0FFFF;font-size:18px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:18px;}
+a:hover{font-size:18px;color:gray;}
+          ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:65px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+
+li a {display: block; color: white; text-align: center;  padding: 14px 16px; float: left;
+    text-decoration: none;font-family: Tahoma, serif; font-size:18px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);}
+.active { background-color:#e6b0aa;}
+.search
+{
+float:right;
+margin:10px;
+display: block;
+ overflow: hidden;
+
+}
+            .overlay
+            {
+                height: 994px;
+                background-color: rgba(0,0,0,.5);
+
+
+            }
+             .ov
+            {
+                height: 70px; width:400px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 90px;
+
+            }
+             .ov1
+            {
+                height: 70px; width:350px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 90px;
+
+            }
+             .ov2
+            {
+                 border: 2px solid;
+                height: 350px; width:400px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 15px 30px;
+                 border-color:#ABDDE5;
+
+            }
+            body
+            {
+                height: 994px;
+                background-image: url("{{url_for('static',filename='imgs/es.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+                
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: #ABDDE5;
+
+                                
+            }
+            p{ font-size: 27px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+            .tabl
+            {
+                border: 1px solid black;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: rgba(0,0,0,.5);
+
+            }
+            /* width */
+        ::-webkit-scrollbar {
+          width: 10px; }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0); }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #888; }
+
+        ::-webkit-scrollbar-corner {
+          background: rgba(0, 0, 0, 0); }
+
+    </style>
     </head>
     <body>
-        <div class="container-fluid">
+
+    <div class="overlay">
+        <ul>
+         <li><a  href="{{url_for('admin',id=id)}}">Home</a></li>
+            <li><a href="#" class="active">Student-Control</a></li>
+            <li><a  href="{{url_for('logout')}}">Logout</a></li>
+
+            <li> <div class="search">
+              <input class="form-control mr-sm-2" type="search" placeholder="Enter secretcode" aria-label="Search" id="stcode">
+                 </div></li>
+              <li>  <div class="search">
+              <button class="button" type="submit" id="search">Search</button>
+               </div></li>
+
+
+</ul>
+        <p align="center"class="x">{{prog_name}} Program&nbsp( level {{level}})</p>
+
+
+
+
+
+        <div class="container">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     {%if result != []%}
-                    <div>
-                        <table class=" table result ">
-                            <thead class="thead-dark">
-                                <tr class="table-success">
-                                    <th scope="col">name</th>
-                                    <th scope="col">age</th>
-                                    <th scope="col">address</th>
-                                    <th scope="col">gender</th>
-                                    <th scope="col">email</th>
-                                    <th scope="col">phonenumber</th>
-                                    <th scope="col">gpa</th>
-                                    <th scope="col">level</th>
-                                    <th scope="col">program</th>
-                                    <th scope="col">deparment</th>
-                                    <th scope="col">secretcode</th>
-                                    <th scope="col">Delete</th>
+
+                    
+                    <div style="margin-top:10px; overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" id="myTable">
+                            <thead class="info">
+                                <tr >
+                                    <th scope="col" class="y">Name</th>
+                                    <th scope="col" class="y">Age</th>
+                                    <th scope="col" class="y">Address</th>
+                                    <th scope="col" class="y">Gender</th>
+                                    <th scope="col" class="y">Email</th>
+                                    <th scope="col" class="y">Phonenumber</th>
+                                    <th scope="col" class="y">GPA</th>
+                                    <th scope="col" class="y">Secretcode</th>
+                                    <th scope="col" class="y">Delete</th>
                                 </tr>
                             </thead>
                             {% for student in result%}
                                 <tbody>
-                                    <tr class="table-success">
+                                    <tr class="table-light" id="{{student.secretcode}}">
                                         <td data-id="{{student.ID}}" data-info="name" data-table = "student">{{student.name}} </td>
                                         <td data-id="{{student.ID}}" data-info="age" data-table = "student">{{student.age}} </td>
                                         <td data-id="{{student.ID}}" data-info="address" data-table = "student">{{student.address}}</td>
@@ -41,9 +217,6 @@
                                         <td data-id="{{student.ID}}" data-info="email" data-table = "student">{{student.email}}</td>
                                         <td data-id="{{student.ID}}" data-info="phonenumber" data-table = "student">{{student.phonenumber}}</td>
                                         <td data-id="{{student.ID}}" data-info="gpa" data-table = "student">{{student.gpa}}</td>
-                                        <td data-id="{{student.ID}}" data-info="program_level" data-table = "student">{{student.program_level}} </td>
-                                        <td data-id="{{student.ID}}" data-info="program_name" data-table = "student">{{student.program_name}}</td>
-                                        <td data-id="{{student.ID}}" data-info="department_name" data-table = "student" >{{student.department_name}}</td>
                                         <td data-id="{{student.ID}}" data-info="secretcode" data-table = "student">{{student.secretcode}}</td>
                                         <th ><button type="button" class="btn btn-danger" data-id="{{student.ID}}" data-table = "student" id="del">Delete</button>
                                         </th>
@@ -56,58 +229,206 @@
 
                 </div>
             </div>
-                <div class="row">
-                    <div class="col-md-4">
-                            <h2 id="s">Add student:</h2>
-                            <div id="input-control" style="height:50%;overflow:scroll;">
-                                <form action="" method="post">
+            <br>
+                <div class="row" style="height: 400px; ">
+                    <div class="col-md-4" >
+                        <span style="color: red;">{{alretdb}}</span>
+                        <div class="ov1" role="alert">
+                          <p> Add student</p>
+                        </div>
+                        <br>
+                            
+                           <div id="input-control" style="height:100%;">
+                                <form action="" method="post" class="form" style="overflow:scroll;height:350px;">
                                     <div class="form-group">
-                                        <label for="name">name:</label>
+                                        <label for="name">Name:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="name" name="name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="ag">age:</label>
+                                        <label for="ag">Age:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="ag" aria-describedby="emailHelp" placeholder="age" name="age">
                                     </div>
                                     <div class="form-group">
-                                        <label for="de">address:</label>
+                                        <label for="de">Address:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="add" aria-describedby="emailHelp" placeholder="address" name="address">
                                     </div>
                                     <div class="form-group">
-                                        <label for="ag">email:</label>
+                                        <label for="ag">Email:</label>
                                         
                                         <input type="text" class="form-control" id="ag" aria-describedby="emailHelp" placeholder="email (optional)" name="email">
                                     </div>
                                     <div class="form-group">
-                                        <label for="gpa">gpa:</label>
+                                        <label for="gpa">GPA:</label>
                                         
                                         <input type="text" class="form-control" id="gpa" aria-describedby="emailHelp" placeholder="gpa (optional)" name="gpa">
                                     </div>
                                     <div class="form-group">
-                                        <label for="ge">gender:</label>
+                                        <label for="ge">Gender:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="ge" placeholder="gender" name="gender">
                                     </div>
                                     <div class="form-group">
-                                        <label for="ph">phone number:</label>
+                                        <label for="ph">Phone number:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="ph" placeholder="phone" name="phone">
                                     </div>
                                     <div class="form-group">
-                                        <label for="sec">secret code:</label>
+                                        <label for="sec">Secret code:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="sec" placeholder="secretcode" name="secretcode">
                                     </div>
-                                    <button type="submit" class="btn btn-primary" id="add">SAVE</button>
+                                    <button type="submit" class="button1" id="add">Save</button>
                                 </form>
                             </div>
                         </div>
+
+                        <div class="col-md-8" style="color: silver; height:400px; ">
+                             <div class="ov" role="alert">
+                          <p> Control Buttons</p>
+                        </div> <br>
+                            <div class="ov2"  style="overflow:scroll;">
+                            <p class="x">SummerCourse:<button class="button2" type="submit" data-level="{{level}}" data-state="{{states.summer}}" data-prog ="{{prog_name}}" data-what="summer" id="change">
+                            </p>
+                                {% if states.summer == 1%}
+                                    Off
+                               
+                                {%endif%}
+                                {% if states.summer == 0%}
+                                    On
+                               
+                                {%endif%}
+                            </button>
+                                     <br> <br>
+                            <p class="x">Regestiration  : &nbsp<button class="button2" type="submit" data-level="{{level}}" data-prog ="{{prog_name}}" data-state="{{states.subject}}" data-what="subject" id="change">
+                               </p>
+                                {% if states.subject == 1%}
+                                    Off
+                               
+                                {%endif%}
+                                {% if states.subject == 0%}
+                                    On
+                               
+                                {%endif%}
+
+                            </button>
+                                       <br> <br>
+                            <p class="x">Drop out :&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="button2" type="submit"  id="change" data-level="{{level}}" data-state="{{states.dropp}}" data-prog ="{{prog_name}}" data-what="dropp" ></p>
+
+                                {% if states.dropp == 1%}
+                                    Off
+                               
+                                {%endif%}
+                                {% if states.dropp == 0%}
+                                    On
+                               
+                                {%endif%}
+                            
+                            </button> <br> <br>
+                            <p class="x">WorkScorces:&nbsp&nbsp&nbsp<button class="button2" type="submit"  id="change" data-state="{{states.work}}" data-level="{{level}}" data-prog ="{{prog_name}}" data-what="work" ></p>
+                                {% if states.work == 1%}
+                                    Off
+                               
+                                {%endif%}
+                                {% if states.work == 0%}
+                                    On
+                               
+                                {%endif%}
+                            </button>  <br> <br>
+                            <p class="x">Final Scores :&nbsp&nbsp&nbsp<button class="button2" type="submit"  data-state="{{states.finall}}" id="change" data-level="{{level}}" data-prog ="{{prog_name}}" data-what="finall" ></p>
+                                {% if states.finall == 1%}
+                                    Off
+                               
+                                {%endif%}
+                                {% if states.finall == 0%}
+                                    On
+                               
+                                {%endif%}
+                            </button>
+                            <br> <br>
+                            <p class="x">Term :&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <button class="button2" type="submit"  data-state="{{states.term}}" id="change" data-level="{{level}}" data-prog ="{{prog_name}}" data-what="term" ></p>
+                                {% if states.term == 1%}
+                                    First
+                               
+                                {%endif%}
+                                {% if states.term == 2%}
+                                    Second
+                               
+                                {%endif%}
+                            </button>
+                                </div>
+                        </div>
                     </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+            </div>
         </div>
-    </body>
+        
+ 
+        <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+        <script>
+                document.addEventListener('DOMContentLoaded',function(){
+                    var search = document.querySelector('#search');
+                   
+                    
+                    
+                    search.onclick = function(){
+                         var studentcode = document.getElementById("stcode").value;
+                        console.log(studentcode)
+                        
+                        var target =document.getElementById("myTable").rows.namedItem(studentcode);
+                        console.log(target)
+                        target.scrollIntoView();
+                    }
+
+                        document.querySelectorAll('#change').forEach(cell =>{
+                            cell.onclick =()=> {
+                                
+                                
+                                    
+                                        request = new XMLHttpRequest();
+                                        request.open('POST','/states');
+                                        request.onload=function()
+                                        {
+                                            document.location=document.location;
+                    
+                                        }
+
+                                        
+                                        data_send = new FormData();
+
+                                        data_send.append('level',cell.dataset.level);
+
+                                        data_send.append('prog',cell.dataset.prog);
+                                        data_send.append('what',cell.dataset.what);
+                                        if (cell.dataset.state== 1 && cell.dataset.what != "term" )
+                                        {
+                                            data_send.append('state',0);
+                                            cell.innerHTML = "off";
+                                        }
+                                       else if (cell.dataset.state== 0 && cell.dataset.what != "term" )
+                                        {
+                                            data_send.append('state',1);
+                                            cell.innerHTML = "on";
+                                        }
+                                        if (cell.dataset.what == "term" && cell.dataset.state == 1)
+                                            {
+                                                data_send.append('state',2);
+                                            }
+                                        else
+                                            {
+                                                 data_send.append('state',1);
+                                            }
+
+                                        request.send(data_send);
+                                    }
+
+                });
+
+            });
+        </script>
+        </body>
+    
+    
 </html>

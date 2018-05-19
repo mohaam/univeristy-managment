@@ -11,22 +11,140 @@
       
     <script src="{{url_for('static',filename='js/dep-control.js')}}"></script>
     <title>Hello, world!</title>
-  </head>
+      <style>
+       .button1 {
+    background-color:#e6b0aa;
+    border-radius:10px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin:5px 90px;
+    cursor: pointer;
+    }
+        table.y{overflow-hidden;}
+th.y{dispaly:block;color:#333;text-align:center;padding:14px 16px;text-decoration:none;background-color:#e6b0aa;
+font-size:15px;
+}
+
+
+    p.x{color:#E0FFFF;}
+     .button1:hover { background-color: #D8959D;}
+
+
+         a:link{text-decoration:none;color:#E0FFFF;font-size:18px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:18px;}
+a:hover{font-size:18px;color:gray;}
+          ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:65px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+
+li a {display: block; color: white; text-align: center;  padding: 14px 16px; float: left;
+    text-decoration: none;font-family: Tahoma, serif; font-size:18px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);}
+.active { background-color:#e6b0aa;}
+
+
+
+
+            .overlay
+            {
+                height:1040px;
+                background-color: rgba(0,0,0,.5);
+
+
+            }
+             .ov
+            {
+                height: 70px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 30px;
+
+            }
+            body
+            {
+                height: 130vh;
+                background-image: url("{{url_for('static',filename='imgs/es.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: #ABDDE5;
+
+
+
+            }
+            p{ font-size: 25px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+            .tabl
+            {
+                border: 1px solid black;
+                padding: 5px;
+                border-radius: 10px;
+                background-color: rgba(0,0,0,.5);
+
+            }
+            /* width */
+        ::-webkit-scrollbar {
+          width: 10px; }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0); }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #888; }
+
+        ::-webkit-scrollbar-corner {
+          background: rgba(0, 0, 0, 0); }
+
+    </style>
+    </head>
+
+
   <body>
+        <div class="overlay">
+        <ul>
+         <li><a  href="{{url_for('admin',id=id)}}">Home</a></li>
+            <li><a href="#" class="active">Department-Control</a></li>
+            <li><a  href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
       <div class="container">
           <div class="row">
               <div class="col-md-4 col-sm-4 col-xs-4">
-                  <div>
-                      <table class="table">
-                          <thead class="thead-dark">
+                  <div style="margin-top: 10px; overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
                             <tr>
-                              <th scope="col">department name</th>
-                              <th scope="col">manager id</th>
+                              <th scope="col" class="y">Department name</th>
+                              <th scope="col" class="y">Manager Id</th>
                             </tr>
                           </thead>
                           <tbody>
                         {%for dep in result%}
-                            <tr>
+                            <tr class="table-light">
                               <td data-key="{{dep.name}}" data-info="name"  id="change">{{dep.name}}</td>
                               <td data-key="{{dep.name}}" data-info="teacher_id"  id="change">{{dep.teacher_id}}</td>
                             </tr>
@@ -37,18 +155,21 @@
               </div>
               <div class="col-md-4 col-sm-4 col-xs-4" ></div>
                 <div class="col-md-4 col-sm-4 col-xs-4">
-                  <div>
-                      <table class="table">
-                          <thead class="thead-dark">
+                   <div style="margin-top: 10px; overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
                             <tr>
-                              <th scope="col">teacher name</th>
-                              <th scope="col">id</th>
+                                <th scope="col" class="y">Teacher name</th>
+                                <th scope="col" class="y">His department</th>
+
+                              <th scope="col" class="y">ID</th>
                             </tr>
                           </thead>
                           <tbody>
                         {%for teacher in result1%}
-                            <tr>
+                            <tr class="table-light">
                               <td>{{teacher.name}}</td>
+                                <td>{{teacher.department_name}}</td>
                               <td>{{teacher.id}}</td>
                             </tr>
                         {%endfor%}
@@ -61,17 +182,20 @@
               <div class="col-md-4 col-sm-4 col-xs-4"></div>
               <div class="col-md-4 col-sm-4 col-xs-4">
                   <form action="" method="post">
+                      <span style="color: red">{{alret}}</span>
+
                         <div class="form-group">
-                            <label for="dep">department name</label>
-                            <input type="text" class="form-control" id="dep" aria-describedby="emailHelp" placeholder="Enter department name "  name="depname">
+                            <p class="x">Department Name:</p>
+                            <input type="text" class="form-control" id="dep" aria-describedby="emailHelp" placeholder="Enter Department Name "  name="depname">
                               
                         </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <button type="submit" class="button1">Submit</button>
                   </form>
               </div>
               <div class="col-md-4 col-sm-4 col-xs-4"></div>
           </div>
       </div>
+        </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
 

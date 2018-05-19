@@ -24,8 +24,15 @@ document.addEventListener('DOMContentLoaded',function(){
                      request.open('POST','/student_control_ajax');
                     request.onload=function()
                     {
-                        document.location = document.location;
-
+                        data = JSON.parse(request.responseText)
+                        if(data["update"] == "sucess")
+                            {
+                                document.location = document.location;
+                            }
+                        if(data["update"] == "failed")
+                            {
+                                alert("enter validate data")
+                            }
                     }
                     data_send = new FormData();
                     data_send.append('do','edit');

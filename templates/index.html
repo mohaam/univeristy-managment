@@ -4,40 +4,117 @@
     <head>
         <link rel="stylesheet" href="../static/css/bootstrap.min.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Lunix</title>
+        <style>
+        p{ font-size: 18px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+        .button {
+
+    border-radius:20px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin:5px 90px;
+    cursor: pointer;
+    background: linear-gradient(#FB8885,#e6b0aa);
+    }
+    .button:hover { color:white;}
+ a:link{text-decoration:none;color:#E0FFFF;font-size:22px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:22px;}
+a:hover{font-size:22px;color:gray;}
+
+        ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:70px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+li { float: left;}
+li a {display: block; color: white; text-align: center;  padding: 14px 16px;
+    text-decoration: none;font-family: Tahoma, serif; font-size:15px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);}
+.active {  background: linear-gradient(#FB8885,#e6b0aa)}
+
+
+            .overlay
+            {
+                height: inherit;
+                background-color: rgba(0,0,0,.4);
+            }
+            body
+            {
+                height: 100vh;
+                background-image: url('../static/imgs/es.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+                
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 60px;
+                padding: 20px;
+                margin-top: 35%;
+                color:#e6b0aa;
+                background-color: rgba(0,0,0,.4);
+                box-shadow: 15px 15px 15px #444444;
+            }
+
+        </style>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xm-4">
-                </div>
-                
-                <div class="col-md-4 col-sm-4 col-xm-4">
-                   
-                        <form  action="{{url_for('index')}}" method="post">
-                             <div class="form-group">
-                                 
-                                <label for="exampleInputEmail1">ID:</label>
-                                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your id" name="id">
-    
-                              </div>
-                              <div class="form-group">
-                                <label for="exampleFormControlSelect2">Your Job:</label>
-                                <select multiple class="form-control" id="exampleFormControlSelect2" name="job">
-                                  <option>teacher</option>
-                                  <option>student</option>
-                                  <option>admin</option>
-                                </select>
-                              </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    
-                </div>
-                
-                <div class="col-md-4 col-sm-4 col-xm-4">
+     <div class="overlay">
+<ul>
+  <li><a class="active" href="#"><I>Sign In</I></a></li>
+  <li><a  href="#about">About</a></li>
+
+</ul>
+
+
+            <div class="container" >
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xm-4">
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xm-4">
+
+                            <form  action="{{url_for('index')}}" method="post" class="form">
+                                <span style="color: red">{{alret}}</span>
+                                 <div class="form-group">
+
+                                    <p>&nbsp&nbsp&nbspSecrete Code:</p>
+                                    <input type="password" class="form-control" id="id" aria-describedby="emailHelp" placeholder="Enter your secret code" name="id">
+
+                                  </div>
+                                    <span style="color: red">{{alret}}</span>
+
+                                  <div class="form-group" >
+                                     <p> &nbsp&nbsp&nbspYour Job:</p>
+                                    <select multiple class="form-control" id="jb" name="job">
+                                      <option>teacher</option>
+                                      <option>student</option>
+                                      <option>admin</option>
+                                    </select>
+                                  </div>
+                                <button type="submit" class="button">Submit</button>
+                            </form>
+
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xm-4">
+                    </div>
                 </div>
             </div>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="../static/js/bootstrap.min.js"></script>
         </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="../static/js/bootstrap.min.js"></script>
     </body>
 </html>

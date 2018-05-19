@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <style>
+      p{ font-size: 18px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+            .tabl
+            {
+                border: 1px solid black;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: rgba(0,0,0,.5);
+
+            }
+        .button {
+    background-color:#e6b0aa;
+    border-radius:10px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin:5px 90px;
+    cursor: pointer;
+    }
+        .button1{
+    background-color:#e6b0aa;
+    border-radius:5px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin:5px 0px;
+    cursor: pointer;
+
+    }
+    .button1:hover { background-color: #D8959D;}
+     .button:hover { background-color: #D8959D;}
+
+        a:link{text-decoration:none;color:#E0FFFF;font-size:18px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:18px;}
+a:hover{font-size:18px;color:gray;}
+ table.y{overflow-hidden;}
+th.y{dispaly:block;color:#333;text-align:center;padding:14px 16px;text-decoration:none;background-color:#e6b0aa;
+font-size:15px;
+}
+        ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:70px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+li { float: left;}
+li a {display: block; color: white; text-align: center;  padding: 14px 16px;
+    text-decoration: none;font-family: Tahoma, serif; font-size:22px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);  }
+.active { background-color:#e6b0aa;}
+
+            .overlay
+            {
+                height: inherit;
+                background-color: rgba(0,0,0,.5);
+            }
+
+
+             body
+            {
+                height: 200vh;
+                background-image: url("{{url_for('static',filename='imgs/es.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: silver;
+                visibility: hidden;
+
+            }
+
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            document.querySelector('#form1').style.visibility ="hidden";
+            document.querySelector('#form2').style.visibility ="hidden";
+            document.querySelector('#form3').style.visibility ="hidden";
+            document.querySelector('#table1').style.visibility ="hidden";
+            document.querySelector('#table2').style.visibility ="hidden";
+            document.querySelector('#table3').style.visibility ="hidden";
+            document.querySelector('#table4').style.visibility ="hidden";
+            
+            states = document.querySelector('#states');
+            
+            console.log(states.dataset.subject)
+            document.querySelector('#register').onclick= function(){
+                var off = document.querySelector('#form1');
+                if (window.getComputedStyle(off,null).visibility == "hidden" && states.dataset.subject == 1){
+                    off.style.visibility = "visible";
+                }
+                else{
+                    off.style.visibility = "hidden";
+                }
+            }
+            document.querySelector('#summer').onclick= function(){
+                var off = document.querySelector('#form2');
+                if (window.getComputedStyle(off,null).visibility == "hidden"&& states.dataset.summer == 1){
+                    off.style.visibility = "visible";
+                }
+                else{
+                    off.style.visibility = "hidden";
+                }
+            }
+            document.querySelector('#drop').onclick= function(){
+                var off = document.querySelector('#form3');
+                if (window.getComputedStyle(off,null).visibility == "hidden"  && states.dataset.dropp == 1){
+                    off.style.visibility = "visible";
+                }
+                else{
+                   off.style.visibility = "hidden";
+                }
+            }
+            document.querySelector('#info').onclick= function(){
+                var off = document.querySelector('#table1');
+                if (window.getComputedStyle(off,null).visibility == "hidden"){
+                    off.style.visibility = "visible";
+                }
+                else{
+                    off.style.visibility = "hidden";
+                }
+            }
+            document.querySelector('#mid').onclick= function(){
+                var off = document.querySelector('#table2');
+                if (window.getComputedStyle(off,null).visibility == "hidden" && states.dataset.work == 1){
+                   off.style.visibility = "visible";
+                }
+                else{
+                   off.style.visibility = "hidden";
+                }
+            }
+            document.querySelector('#final').onclick= function(){
+                var off = document.querySelector('#table3');
+                if (window.getComputedStyle(off,null).visibility == "hidden" && states.dataset.finall == 1){
+                    off.style.visibility = "visible";
+                }
+                else{
+                    off.style.visibility = "hidden";
+                }
+            }
+            document.querySelector('#schedule').onclick= function(){
+                var off = document.querySelector('#table4');
+                if (window.getComputedStyle(off,null).visibility == "hidden"){
+                    off.style.visibility = "visible";
+                }
+                else{
+                    off.style.visibility = "hidden";
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+  <div class="overlay">
+    <ul >
+    <li><a class="active" href="">Home</a></li>
+  <li><a  href="{{url_for('logout')}}">Logout</a></li>
+    </ul>
+    <div class="container-fluid">
+
+
+        <div class="row">
+
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button" class="button1" id="register">Subjects Registration</button>
+                <form action="{{url_for('student',id = id)}}" method="post" id="form1">
+
+                    <div style="margin-top: 10px;  overflow: scroll; height: 300px;"  class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
+                        <tr>
+
+                                <th  class="y">#</th>
+                                <th  class="y">Credit Hours</th>
+                                <th  class="y">Course Name</th>
+                                <th  class="y">Course Code</th>
+                                <th  class="y">Mandatory</th>
+                               <th  class="y"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for subject in subjects %}
+                           <tr class="table-light">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{subject.hours}}</td>
+                                <td>{{subject.name}}</td>
+                                <td>{{subject.id}}</td>
+                                {% if subject.optional == 1 %}
+                                    <td>No</td>
+                                {% elif subject.optional == 0 %}
+                                    <td>Yes</td>
+                                {% endif %}
+                                    <td><input type="checkbox" id="toto" name="check" value="{{subject.id}}"></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="submit"  class="button" name="btn" value="register">Submit</button>
+                    </div>
+                </form>
+            </div>
+        
+             <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button"  class="button1" id="summer">Summer Courses</button>
+                 <span style="color:red;">{{alret}}</span>
+                <form action="{{url_for('student', id = id)}}" method="post" id="form2">
+                    <div style="margin-top: 10px;  overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
+                            <tr>
+                                <th class="y">#</th>
+                                <th class="y">Credit Hours</th>
+                                <th class="y">Course Name</th>
+                                <th class="y">Course Code</th>
+                                 <th class="y"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for sum in summer %}
+                             <tr class="table-light">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{sum.hours}}</td>
+                                <td>{{sum.name}}</td>
+                                <td>{{sum.course_code}}</td>
+                                <td><input type="checkbox" id="blankCheckbox" name="check2" value="{{sum.course_code}}"></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                   <p>P.S. Subjects in the summer don't exceed 6 hours</p>
+
+                    <button type="submit"  class="button" name="btn" value="summer">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+           <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button"  class="button1" id="drop">Drop Out</button>
+
+                <form action="{{url_for('student',id = id)}}" method="post" id="form3"  class="form">
+
+                    <div class="form-group">
+                        <label for="de">Course Code</label>
+                        <input type="text" class="form-control" id="de" aria-describedby="emailHelp" placeholder="code" name="code">
+                    </div>
+
+                    <button type="submit" class="button" name="btn" value="drop">Submit</button>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button" class="button1" id="info">Student Information</button>
+                <div style="margin-top: 10px;  overflow: scroll; height: 300px;" class="tabl" id="table1">
+                        <table  class=" table table-hover" >
+                            <thead class="info">
+                            <tr>
+
+
+                                <th class="y">ID</th>
+                                <th class="y">Name</th>
+                                <th class="y">Level</th>
+                                <th class="y">Department</th>
+                                <th class="y">Credit hours</th>
+                                <th class="y">GPA</th>
+                                <th class="y">Registered Subjects</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item  in result_info  %}
+                           <tr class="table-light">
+                                
+                                <td>{{item.ID}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.program_level}}</td>
+                                <td>{{item.department_name}}</td>
+                                <td>{{item.hours}}</td>
+                                <td>{{item.gpa}}</td>
+                               {%if studentcourses!=[]%}
+                                <td>{{studentcourses[0].course_code}}</td>
+                                {%endif%}
+                            {%endfor%}
+                            </tr>
+                            {% for item1  in studentcourses[1:]  %}
+                           <tr class="table-light">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{item1.course_code}}</td>
+                            {%endfor%}
+                            </tr>
+                                
+                            <!-- adding the table content --->
+                            
+                            
+                        </tbody>
+                    </table>
+            </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button"  class="button1" id="mid">Work scores</button>
+
+                   <div style="margin-top: 10px;  overflow: scroll; height: 300px;"  class="tabl" id="table2">
+                        <table   class=" table table-hover" >
+                            <thead class="info">
+                            <tr>
+                                <th class="y">#</th>
+                                <th class="y">Course Code</th>
+                                <th class="y">Exam Type</th>
+                                <th class="y">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for test in score %}
+                           <tr class="table-light">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{test.exam_course_code}}</td>
+                                <td>{{test.exam_type}}</td>
+                                <td>{{test.total}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                   </div>
+            </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                <button type="button"  class="button1" id="final">Final Scores</button>
+                  <div style="margin-top: 10px;  overflow: scroll; height: 300px;"  class="tabl" id="table3">
+                    <table  class=" table table-hover">
+                        <thead class="info">
+                            <tr>
+                                <th class="y">#</th>
+                                <th class="y">Course Code</th>
+                                <th class="y">Final Grade</th>
+                                <th class="y">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in final %}
+                             <tr class="table-light">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{result.exam_course_code}}</td>
+                                <td>{{result.total}}</td>
+                                <td>{{result.grade}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 col-sm-1 col-xs-1"></div>
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                <button type="button"  class="button1" id="schedule">Schedule</button>
+                
+                     <div style="margin-top: 10px;  overflow: scroll; height: 300px;"  id="table4" class="tab1">
+                         {% if result != [] %}
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr>
+                                    <th  scope="col">Day</th>
+                                    <th scope="col">Course code</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">From</th>
+                                    <th scope="col">To</th>
+                                </tr>
+                            </thead>
+                                <!--  code 5ra awii 3ndi fkra bs msh dlw3ti !-->
+                                <tbody>
+                                    <!-- saturday !-->
+                            {% set count = [1] %} 
+                            {% set flag = {'day':result[0][0]} %}
+                            {% for time in result %}
+                            
+                                    {% if flag['day'] != time.weekdays_day %} 
+                                        {% set count = [1] %}
+                                        
+                                    {%endif%}
+                                    {% if flag.update( {'day' : time.weekdays_day} )  %}{%endif%}
+                                    <tr >
+                                        {% if count[0] == 1 %}
+                                            <th>{{time.weekdays_day}}</th>
+                                        {%endif%}
+                                        {% if count[0] > 1 %}
+                                            <th></th>
+                                        {%endif%}
+                                        <th >{{time.course_id}}</th>
+                                        <th >{{time.name}}</th>
+                                        <td data-id="{{time.id}}" data-info="type" data-table = "times">{{time.type}}</td>
+                                        <td data-id="{{time.id}}" data-info="fromm" data-table = "times">{{time.fromm}}</td>
+                                        <td data-id="{{time.id}}" data-info="too" data-table = "times">{{time.too}}</td>
+                                        {% if count.append(count.pop() + 1) %}{%endif%}
+                                                
+                                    </tr>
+                                    
+                            
+                            {%endfor%}
+                            <!-- adding the table content --->
+                        </tbody>
+                    </table>
+                {%endif%}
+                </div>
+            </div>
+        
+        </div>
+       
+    </div>
+    </div>
+  
+    
+    <div id="states" data-summer={{states.summer}} data-finall={{states.finall}} data-work={{states.work}} data-dropp={{states.dropp}} data-subject={{states.subject}} style="display: none;"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="{{url_for('static',filename='js/prog-manager.js')}}"></script>
+    <title>Lunix</title>
+       <style>
+       .button1 {
+    background-color:#e6b0aa;
+    border-radius:10px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin:5px 40px;
+    cursor: pointer;
+    }
+        table.y{overflow-hidden;}
+th.y{dispaly:block;color:#333;text-align:center;padding:14px 16px;text-decoration:none;background-color:#e6b0aa;
+font-size:15px;
+}
+
+
+    p.x{color:#E0FFFF;}
+     .button1:hover { background-color: #D8959D;}
+
+
+         a:link{text-decoration:none;color:#E0FFFF;font-size:18px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:18px;}
+a:hover{font-size:18px;color:gray;}
+          ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:65px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+
+li a {display: block; color: white; text-align: center;  padding: 14px 16px; float: left;
+    text-decoration: none;font-family: Tahoma, serif; font-size:18px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);}
+.active { background-color:#e6b0aa;}
+
+
+
+
+            .overlay
+            {
+                height:1040px;
+                background-color: rgba(0,0,0,.5);
+
+
+            }
+             .ov
+            {
+                height: 55px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 20px;
+
+            }
+            .ov1
+            {
+                height: 55px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 70px;
+
+
+
+            }
+            body
+            {
+                height: 130vh;
+                background-image: url("{{url_for('static',filename='imgs/es.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: #ABDDE5;
+
+
+
+            }
+            p{ font-size: 25px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+            .tabl
+            {
+                border: 1px solid black;
+                padding: 7px;
+                border-radius: 10px;
+                background-color: rgba(0,0,0,.5);
+
+            }
+            /* width */
+        ::-webkit-scrollbar {
+          width: 10px; }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0); }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #888; }
+
+        ::-webkit-scrollbar-corner {
+          background: rgba(0, 0, 0, 0); }
+
+    </style>
+  </head>
+  <body>
+   <div class="overlay">
+        <ul>
+         <li><a  href="{{url_for('teacher',id=id,name=teachername,prog_name=prog_name,dep_name=dep_name)}}">Home</a></li>
+            <li><a href="#" class="active">Management-Panel</a></li>
+            <li><a  href="{{url_for('logout')}}">Logout</a></li>
+
+        </ul>
+
+
+       <p align="center" class="x">  Welcome Dr : {{teachername}}</p>
+
+    <div class="container-fluid">
+
+
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-4 col-xs-4 col-sm-4 ">
+                <div class="ov1" id="times"><p class="x" >Add Courses Teachers</p></div><br>
+                 <form action="" method="post" class="form" style="height:240px;">
+                    <span style="color: red;"> {{alret}} </span>
+                  <div class="form-group">
+                   Courses:
+                    <select class="form-control" name="courses">
+                    
+                    {%for course in courses%}
+                      <option value="{{course.id}}">{{course.name}}</option>
+                    {%endfor%}
+                   
+                    </select>
+                  </div>
+                  <div class="form-group">
+                   Teachers:
+                    <select class="form-control" name="teacher">
+                        
+                        {%for teacher in teachers%}
+                          <option value="{{teacher.id}}">{{teacher.name}}</option>
+                        {%endfor%}
+                       
+                    </select>
+                  </div>
+        
+                  <button type="submit" class="button1" name="btn" value="teacher">Submit</button>
+                </form>
+            </div>
+             <div class="col-md-2 col-xs-2 col-sm-2 " >
+                  <div style="margin-top: 10px;  overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
+
+                        <tr>
+                            <th scope="col" class="y">ID</th>
+                            <th scope="col" class="y">Teacher Name</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                            {%for teacher in teachers%}
+                            <tr class="table-light">
+                                <th scope="row">{{teacher.id}}</th>
+                                <td>{{teacher.name}}</td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-xs-6 col-sm-6 ">
+                 <div style="margin-top: 10px;  overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
+                        <tr>
+                            <th scope="col" class="y">Course Name</th>
+                            <th scope="col" class="y">Course Code</th>
+                            <th scope="col" class="y">Teacher Name</th>
+                            <th scope="col" class="y">Teacher ID</th>
+                            <th scope="col" class="y">Delete</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                            {%for item in teacherscourses%}
+                           <tr class="table-light">
+                                <th scope="row">{{item.name}}</th>
+                                <th scope="row">{{item.course_code}}</th>
+                                <td>{{item[1]}}</td>
+                                <td class="change" data-col="teacher_id" data-table="teachercourses" data-id="{{item[0]}}">{{item.teacher_id}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger"  data-table="teachercourses" data-id="{{item[0]}}" id="del">Delete</button>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-4">
+                <div class="ov1" id="times"><p class="x" >Add Exam List</p></div><br>
+                 <div id="input-control" style="height:100%;">
+                                <form action="" method="post" class="form" style="overflow:scroll;height:400px;">
+
+
+
+                     <span style="color: red">{{dbalret}}</span>
+                     <span style="color: red">{{alretexam}}</span>
+                     <span style="color: red">{{alretstudent}}</span>
+                    <div class="form-group">
+                       Exam Code:
+                        <input type="text" class="form-control" id="exam" placeholder="exam code" name="examcode">
+                    </div>
+                  <div class="form-group">
+                   Type:
+                    <select class="form-control" name="type">
+                        <option>midterm</option>
+                        <option>final</option>
+                        <option>oral</option>
+                        <option>practical</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                   courses:
+                    <select class="form-control" name="course">
+                    {%for course in courses%}
+                      <option value="{{course.id}}">{{course.name}}</option>
+                    {%endfor%}
+                    </select>
+                  </div>
+                    <div class="form-group">
+                       Teacher-Supervision :
+                        <select class="form-control" name="teacher">
+                        {%for teacher in teachers%}
+                          <option value="{{teacher.id}}">{{teacher.name}}</option>
+                        {%endfor%}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                       full mark:
+                        <input type="text" class="form-control" id="full" placeholder="fullmark" name="full">
+                    </div>
+                    <div class="form-group">
+                       pass mark:
+                        <input type="text" class="form-control" id="pass" placeholder="passmark" name="pass">
+                    </div>
+        
+                  <button type="submit" class="button1" name="btn" value="exam">Submit</button>
+                </form>
+                 </div>
+            </div>
+            <div class="col-md-8">
+                 <div style="margin-top: 10px;  overflow: scroll; height: 450px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
+                        <tr>
+                            <th scope="col" class="y">Exam Code</th>
+                            <th scope="col" class="y">Type</th>
+                            <th scope="col" class="y">Full Mark</th>
+                            <th scope="col" class="y">Pass Mark</th>
+                            <th scope="col" class="y">Course Name</th>
+                            <th scope="col" class="y">Course Code</th>
+                            <th scope="col" class="y">Supervisor Name</th>
+                            <th scope="col" class="y">Supervisor ID</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+                            {%for exam in exams_table%}
+                           <tr class="table-light">
+                                <th scope="row">{{exam.id}}</th>
+                                <td>{{exam.type}}</td>
+                                <td>{{exam.full_mark}}</td>
+                                <td>{{exam.passing_mark}}</td>
+                                <td>{{exam[1]}}</td>
+                                <td>{{exam.course_code}}</td>
+                                <td>{{exam[0]}}</td>
+                                <td class="change" data-col="teacher_id" data-table="exam" data-id="{{exam.id}}">{{exam.teacher_id}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger"  data-table="exam" data-id="{{exam.id}}" id="del">Delete</button>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  
+    <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+
+  </body>
+</html>

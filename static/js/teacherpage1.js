@@ -9,7 +9,15 @@ document.addEventListener('DOMContentLoaded',function(){
                      request.open('POST','/teacher_ajax');
                     request.onload=function()
                     {
-                        cell.innerHTML=mark;
+                            data = JSON.parse(request.responseText)
+                            if(data["insert"] == "sucsess")
+                            {
+                                cell.innerHTML=mark;
+                            }
+                            if(data["insert"] == "failed")
+                            {
+                                alert("enter validate data")
+                            }
 
                     }
                     data_send = new FormData();

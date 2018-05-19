@@ -7,24 +7,147 @@
         <script src="{{url_for('static',filename='js/student-control.js')}}"></script>
         <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+         <style>
+          .button1 {
+    background-color:#e6b0aa;
+    border-radius:10px;
+    border:#e6b0aa;
+    color:#333;
+    padding: 10px 29px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin:5px 90px;
+    cursor: pointer;
+    }
+        table.y{overflow-hidden;}
+th.y{dispaly:block;color:#333;text-align:center;padding:14px 16px;text-decoration:none;background-color:#e6b0aa;
+font-size: 18px;
+}
+
+
+
+     p.x{color:#E0FFFF;}
+     .button1:hover { background-color: #D8959D;}
+
+         a:link{text-decoration:none;color:#E0FFFF;font-size:18px;}
+a:visited{color:#E0FFFF;text-decoration:none;font-size:18px;}
+a:hover{font-size:18px;color:gray;}
+          ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    height:65px;
+    width:100%;
+    background-color: rgba(0,0,0,0.2);}
+
+li a {display: block; color: white; text-align: center;  padding: 14px 16px; float: left;
+    text-decoration: none;font-family: Tahoma, serif; font-size:18px; height:70px;}
+li a:hover:not(.active) {  background-color: rgba(0,0,0,0.4);}
+.active { background-color:#e6b0aa;}
+.search
+{
+float:right;
+margin:10px;
+display: block;
+ overflow: hidden;
+
+}
+
+            .overlay
+            {
+               height:1000px;
+                background-color: rgba(0,0,0,.5);
+
+
+            }
+             .ov
+            {
+                height: 70px;
+                background-color: rgba(0,0,0,.5);
+                border-radius: 5px;
+                 padding: 10px 30px;
+
+            }
+            body
+            {
+                height: 970px;
+                background-image: url("{{url_for('static',filename='imgs/es.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+            .form
+            {
+                border: 2px solid;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: rgba(0,0,0,.5);
+                color: #ABDDE5;
+
+
+            }
+            p{ font-size: 27px;
+               font-family: Tahoma, serif;
+               color: #e6b0aa;
+              }
+            .tabl
+            {
+                border: 1px solid black;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: rgba(0,0,0,.5);
+
+            }
+            /* width */
+        ::-webkit-scrollbar {
+          width: 10px; }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0); }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #888; }
+
+        ::-webkit-scrollbar-corner {
+          background: rgba(0, 0, 0, 0); }
+
+    </style>
     </head>
     <body>
+     <div class="overlay">
+        <ul>
+         <li><a  href="{{url_for('admin',id=id)}}">Home</a></li>
+            <li><a href="#" class="active">Times-Control</a></li>
+            <li><a  href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+        <p align="center" class="x">{{prog_name}} Program&nbsp( level {{level}})</p>
+
         <div class="container">
             
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     {%if result != []%}
-                    <div style="height: 350px; overflow: scroll;">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">day</th>
-                                    <th scope="col">course code</th>
-                                    <th scope="col">name</th>
-                                    <th scope="col">type</th>
-                                    <th scope="col">from</th>
-                                    <th scope="col">to</th>
-                                    <th scope="col">Delete</th>
+                  <div style="margin-top: 10px; overflow: scroll; height: 300px;" class="tabl">
+                        <table class=" table table-hover" >
+                            <thead class="info">
+                                <tr >
+                                    <th scope="col" class="y">Day</th>
+                                    <th scope="col" class="y">Course Code</th>
+                                    <th scope="col" class="y">Name</th>
+                                    <th scope="col" class="y">Type</th>
+                                    <th scope="col" class="y">From</th>
+                                    <th scope="col" class="y">To</th>
+                                    <th scope="col" class="y">Place</th>
+                                    <th scope="col" class="y">Delete</th>
                                 </tr>
                             </thead>
                                 <!--  code 5ra awii 3ndi fkra bs msh dlw3ti !-->
@@ -39,7 +162,7 @@
                                         
                                     {%endif%}
                                     {% if flag.update( {'day' : time.weekdays_day} )  %}{%endif%}
-                                    <tr >
+                                    <tr class="table-light">
                                         {% if count[0] == 1 %}
                                             <th>{{time.weekdays_day}}</th>
                                         {%endif%}
@@ -51,6 +174,7 @@
                                         <td data-id="{{time.id}}" data-info="type" data-table = "times">{{time.type}}</td>
                                         <td data-id="{{time.id}}" data-info="fromm" data-table = "times">{{time.fromm}}</td>
                                         <td data-id="{{time.id}}" data-info="too" data-table = "times">{{time.too}}</td>
+                                        <td data-id="{{time.id}}" data-info="place" data-table = "times">{{time.place}}</td>
                                         <th><button type="button" class="btn btn-danger" data-id="{{time.id}}" data-table = "times" id="del">Delete</button></th>
                                         {% if count.append(count.pop() + 1) %}{%endif%}
                                                 
@@ -192,51 +316,61 @@
 
                 </div>
             </div>
+                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                            <h2 id="s">Add Course:</h2>
-                            <div id="input-control" style="height:50%;">
-                                <form action="" method="post">
-                                    <div class="form-group">
-                                        <label for="day">day:</label>
+                       <div class="ov" role="alert">
+                          <p> Add Course</p>
+                        </div>
+
+                        <br>
+
+
+
+                           <div id="input-control" style="height:100%;">
+                                <form action="" method="post" class="form" style="overflow:scroll;height:350px;">
+
+                                    <div class="form-group" >
+
+                                        <label for="day">Day:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <select class="form-control" name="weekday">
                                             
-                                            <option value="1saturday">saturday</option>
-                                            <option value="2sunday">sunday</option>
-                                            <option value="3monday">monday</option>
-                                            <option value="4tuesday">tuesday</option>
-                                            <option value="5wednesday">wednesday</option>
-                                            <option value="6thursday">thursday</option>
+                                            <option value="1Saturday">Saturday</option>
+                                            <option value="2Sunday">Sunday</option>
+                                            <option value="3Monday">Monday</option>
+                                            <option value="4Tuesday">Tuesday</option>
+                                            <option value="5Wednesday">Wednesday</option>
+                                            <option value="6Thursday">Thursday</option>
                                             
                                         </select>                                    
                                     </div>
                                     <div class="form-group">
-                                        <label for="course">course code:</label>
+                                        <label for="course">Course Code:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="course" aria-describedby="emailHelp" placeholder="course code" name="coursecode">
                                     </div>
                                     <div class="form-group">
-                                        <label for="type">type:</label>
+                                        <label for="type">Type:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="type" aria-describedby="emailHelp" placeholder="type" name="type">
                                     </div>
                                     <div class="form-group">
-                                        <label for="from">from:</label>
+                                        <label for="from">From:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="from" aria-describedby="emailHelp" placeholder="from" name="from">
                                     </div>
                                     <div class="form-group">
-                                        <label for="to">to:</label>
+                                        <label for="to">To:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="to" aria-describedby="emailHelp" placeholder="to" name="to">
                                     </div>
                                     <div class="form-group">
-                                        <label for="place">place:</label>
+                                        <label for="place">Place:</label>
                                         <span style="color: red;">{{alret}}</span>
                                         <input type="text" class="form-control" id="place" aria-describedby="emailHelp" placeholder="place" name="place">
                                     </div>
-                                    <button type="submit" class="btn btn-primary" id="add">SAVE</button>
+                                    <button type="submit" class="button1" id="add">Save</button>
                                 </form>
                             </div>
                         </div>
