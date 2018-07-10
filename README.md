@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-# univeristy-managment
+univeristy-managment
 make auniveristy managment system 
+
 -first problem we need to do ajax requests with routes how we invoke the url of routes in the requests 
--second problem we need to add varaibles at the colum and the table in database statments , we use sqlalchmey 
-=======
-# univeristy-managment
+
 make auniveristy managment system that consist of five parts :
 
 admin part:
@@ -21,4 +19,4 @@ let manager set who will teach the courses and add exam lists
 
 student part:
 let students submit the subjects he want to join see information about him self ,see work scores etc
->>>>>>> 58a93ba23cd3922a27dd24de021f15e03d9f6b3c
+
